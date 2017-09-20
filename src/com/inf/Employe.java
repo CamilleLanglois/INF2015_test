@@ -6,19 +6,19 @@ package com.inf;
 public class Employe {
 
     private String fullname;
-    private Long department_type;
-    private Long nbDiploma;
-    private Long seniority;
+    private Integer department_type;
+    private Integer nbDiploma;
+    private Integer seniority;
     private Double hourRate;
     private Double workedHours;
 
     //Constructor
-    public Employe(String fullname, Long department_type){
+    public Employe(String fullname, Integer department_type){
         this.fullname = fullname;
         this.department_type = department_type;
     }
 
-    public Employe(String fullname, Long department_type, Long nbDiploma, Long seniority, Double hourRate, Double workedHours){
+    public Employe(String fullname, Integer department_type, Integer nbDiploma, Integer seniority, Double hourRate, Double workedHours){
         this(fullname, department_type);
         this.nbDiploma = nbDiploma;
         this.seniority = seniority;
