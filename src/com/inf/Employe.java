@@ -4,7 +4,12 @@ package com.inf;
  * Created by davidboutet on 17-09-18.
  */
 public class Employe {
-
+    
+    private final Integer NB_DIPLOMES_BASE = 2;
+    private final Double MONTANT_FIXE = 9733.70;
+    private final Double POURC_RENTE_PROV = 0.072;
+    private final Double POURC_RENTE_FED = 0.125;
+    
     private String fullname;
     private Long department_type;
     private Long nbDiploma;
@@ -27,21 +32,30 @@ public class Employe {
     }
 
     //Methods
+    
+    // charge de travail
     private static Double getSalary(){
 
         return 20.00;
     }
-
+    
     private static Double getSeniorityAmount(){
 
         return 20.00;
     }
-
+    //Simon
     private static Double getDiplomaAmount(){
 
         return 20.00;
     }
-
+    
+    private static Double roundToFive(Double n) {
+        return 20.00;
+    }
+    // Simon
+    private static Double averageRate(Double minRate, Double maxRate) {
+        return 20.00;
+    }
     public static Double getTotalSalary(){
         return getSalary()+getSeniorityAmount()+getDiplomaAmount();
     }
