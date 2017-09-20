@@ -65,9 +65,7 @@ public class Application {
     public static Boolean writeJson(JSONObject json, String filename){
         Boolean succeed = false;
         try {
-            FileWriter file = new FileWriter("output/"+filename);
-            file.write(json.toString());
-            file.flush();
+            FileManager.createFileFromStringContent("output", filename, json.toString());
             succeed = true;
         }catch (Exception e){
             println(e);
