@@ -33,12 +33,12 @@ public class Employe {
 
     //Methods
     
-    // charge de travail
+    // charge de travail - JAde
     private static Double getSalary(){
 
         return 20.00;
     }
-    
+    //Camille
     private static Double getSeniorityAmount(){
 
         return 20.00;
@@ -48,7 +48,7 @@ public class Employe {
 
         return 20.00;
     }
-    
+    //Jade
     private static Double roundToFive(Double n) {
         return 20.00;
     }
@@ -56,14 +56,15 @@ public class Employe {
     private static Double averageRate(Double minRate, Double maxRate) {
         return 20.00;
     }
+    //Camille
     public static Double getTotalSalary(){
         return getSalary()+getSeniorityAmount()+getDiplomaAmount();
     }
-
+    //Camille 
     public static Double calculRenteProvincial(){
         return 100.00;
     }
-
+    // Simon
     public static Double calculRenteFederal(){
         return 100.00;
     }
