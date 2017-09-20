@@ -8,7 +8,7 @@ montantDiplome : Pour calculer le montant à verser selon le nombre de diplôme
 valeurSalarialeParEmploye : qui additionne les méthodes 3-4-5 (pour la valeur d’un employé)
 valeurSalarialeDuDepartement : pour calculer la valeur totale du département 
 renteProvinciale 
-renteFederal e
+renteFederale
 
 
 Variables 
