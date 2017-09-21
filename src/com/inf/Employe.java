@@ -39,9 +39,20 @@ public class Employe {
         return 20.00;
     }
     //Camille
-    private static Double getSeniorityAmount(){
-
-        return 20.00;
+    private Double getSeniorityAmount(){
+  
+        Double pourcentageValeurSalariale = 0.0;
+        
+        switch(this.department_type) {
+            
+            case 0: pourcentageValeurSalariale = 0.05;
+            break;
+            case 1: pourcentageValeurSalariale = 0.1;
+            break;
+            case 2 : pourcentageValeurSalariale = 0.15;
+            break;
+        }
+        return (this.seniority * (pourcentageValeurSalariale * this.getSalary()) - 5000);
     }
     //Simon
     private static Double getDiplomaAmount(){
@@ -62,7 +73,7 @@ public class Employe {
     }
     //Camille 
     public static Double calculRenteProvincial(){
-        return 100.00;
+        return 100.0;
     }
     // Simon
     public static Double calculRenteFederal(){

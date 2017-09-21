@@ -20,7 +20,7 @@ public class Application {
 
         //load external json file(name in argument) and return it as a JSONObject
         JSONObject jsonObject = getJsonFromFile(filePath);
-
+        
         //parse JSON object to required output format
         jsonToEmployeList(jsonObject);
 
