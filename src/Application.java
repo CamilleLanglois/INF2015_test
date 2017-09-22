@@ -47,18 +47,22 @@ public class Application {
         Boolean succeed = false;
         try{
             Integer department_type = jsonObject.getInt("type_departement");
+            Double taux_min = jsonObject.getDouble("taux_horaire_min"),
+                   taux_max = jsonObject.getDouble("taux_horaire_max");
             JSONArray employeArray = jsonObject.getJSONArray("employes");
             for (int i = 0; i<employeArray.size(); i++){
                 JSONObject employe = (JSONObject)employeArray.get(i);
-                Employe e = new Employe(employe.getString("nom"), department_type, 10.00, 30.00);
-
+                Integer nbDiploma = employe.getInt("nombre_diplomes"),
+                        seniority = employe.getInt("nombre_droit_anciennete");
+//                Double hour_rate = employe.getDouble("charge_travail");
+                Double worked_hour = employe.getDouble("charge_travail");
+                Employe e = new Employe(employe.getString("nom"), department_type, taux_min, taux_max, nbDiploma, seniority, 0.00, worked_hour);
                 finalEmployeList.add(e);
             }
             succeed = true;
         }catch (Exception e){
-            println(e);
+            println(e.getMessage());
         }
-
         return succeed;
     }
 
@@ -68,7 +72,7 @@ public class Application {
             FileManager.createFileFromStringContent("output", filename, json.toString());
             succeed = true;
         }catch (Exception e){
-            println(e);
+            println(e.getMessage());
         }
         return succeed;
     }

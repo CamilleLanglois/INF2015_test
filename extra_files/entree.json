@@ -1,8 +1,8 @@
 {
 	"nom_departement": "Informatique",
 	"type_departement": 0,
-	"taux_horaire_min": "20.00 $",
-	"taux_horaire_max": "40.00 $",
+	"taux_horaire_min": "20.00",
+	"taux_horaire_max": "40.00",
 	"employes": [{
 			"nom": "Zied Zaier",
 			"nombre_droit_anciennete": 4,
