@@ -27,8 +27,8 @@ public class Employe {
         this.hourly_rate_max = hourly_rate_max;
     }
 
-    public Employe(String fullname, Integer department_type, Integer nbDiploma, Integer seniority,
-                   Double hourRate, Double workedHours, Double hourly_rate_min, Double hourly_rate_max){
+    public Employe(String fullname, Integer department_type, Double hourly_rate_min, Double hourly_rate_max,
+                   Integer nbDiploma, Integer seniority, Double hourRate, Double workedHours){
         this(fullname, department_type, hourly_rate_min, hourly_rate_max);
         this.nbDiploma = nbDiploma;
         this.seniority = seniority;
@@ -74,7 +74,7 @@ public class Employe {
         return 20.00;
     }
     //Jade
-    private Double roundToFive(Double n) {
+    public Double roundToFive(Double n) {
         Double n2=0.00;
         n2 = Math.ceil (n*20.00)/20.00;
         return n2;

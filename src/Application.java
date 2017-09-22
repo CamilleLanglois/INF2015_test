@@ -50,7 +50,7 @@ public class Application {
             JSONArray employeArray = jsonObject.getJSONArray("employes");
             for (int i = 0; i<employeArray.size(); i++){
                 JSONObject employe = (JSONObject)employeArray.get(i);
-                Employe e = new Employe(employe.getString("nom"), department_type);
+                Employe e = new Employe(employe.getString("nom"), department_type, 10.00, 30.00);
 
                 finalEmployeList.add(e);
             }
