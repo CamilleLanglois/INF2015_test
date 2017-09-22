@@ -16,15 +16,20 @@ public class Employe {
     private Integer seniority;
     private Double hourRate;
     private Double workedHours;
+    private Double hourly_rate_min;
+    private Double hourly_rate_max;
 
     //Constructor
-    public Employe(String fullname, Integer department_type){
+    public Employe(String fullname, Integer department_type, Double hourly_rate_min, Double hourly_rate_max){
         this.fullname = fullname;
         this.department_type = department_type;
+        this.hourly_rate_min = hourly_rate_min;
+        this.hourly_rate_max = hourly_rate_max;
     }
 
-    public Employe(String fullname, Integer department_type, Integer nbDiploma, Integer seniority, Double hourRate, Double workedHours){
-        this(fullname, department_type);
+    public Employe(String fullname, Integer department_type, Integer nbDiploma, Integer seniority,
+                   Double hourRate, Double workedHours, Double hourly_rate_min, Double hourly_rate_max){
+        this(fullname, department_type, hourly_rate_min, hourly_rate_max);
         this.nbDiploma = nbDiploma;
         this.seniority = seniority;
         this.hourRate = hourRate;
@@ -33,18 +38,27 @@ public class Employe {
 
     //Methods
     
-    // charge de travail - JAde
-    private static Double getSalary(){
-
-        return 20.00;
+    // charge de travail - Jade
+    private Double getSalary(){
+        Double valeurSalarialeSelonHeureTaux = 0.0;
+        switch(this.department_type) {
+            case 0:
+                valeurSalarialeSelonHeureTaux = this.workedHours + this.hourly_rate_min;
+                break;
+            case 1:
+                valeurSalarialeSelonHeureTaux = this.workedHours * ((this.hourly_rate_min*this.hourly_rate_max)/2);
+                break;
+            case 2 :
+                valeurSalarialeSelonHeureTaux = this.workedHours * this.hourly_rate_max;
+                break;
+        }
+        return valeurSalarialeSelonHeureTaux;
     }
     //Camille
     private Double getSeniorityAmount(){
-  
         Double pourcentageValeurSalariale = 0.0;
         
         switch(this.department_type) {
-            
             case 0: pourcentageValeurSalariale = 0.05;
             break;
             case 1: pourcentageValeurSalariale = 0.1;
@@ -55,28 +69,30 @@ public class Employe {
         return (this.seniority * (pourcentageValeurSalariale * this.getSalary()) - 5000);
     }
     //Simon
-    private static Double getDiplomaAmount(){
+    private Double getDiplomaAmount(){
 
         return 20.00;
     }
     //Jade
-    private static Double roundToFive(Double n) {
-        return 20.00;
+    private Double roundToFive(Double n) {
+        Double n2=0.00;
+        n2 = Math.ceil (n*20.00)/20.00;
+        return n2;
     }
     // Simon
-    private static Double averageRate(Double minRate, Double maxRate) {
+    private Double averageRate(Double minRate, Double maxRate) {
         return 20.00;
     }
     //Camille
-    public static Double getTotalSalary(){
+    public Double getTotalSalary(){
         return getSalary()+getSeniorityAmount()+getDiplomaAmount();
     }
     //Camille 
-    public static Double calculRenteProvincial(){
+    public Double calculRenteProvincial(){
         return 100.0;
     }
     // Simon
-    public static Double calculRenteFederal(){
+    public Double calculRenteFederal(){
         return 100.00;
     }
 
