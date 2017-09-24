@@ -9,6 +9,7 @@ public class Employe {
     private final Double MONTANT_FIXE = 9733.70;
     private final Double POURC_RENTE_PROV = 0.072;
     private final Double POURC_RENTE_FED = 0.125;
+    private final Double MONTANT_BASE_ANCIENNETE = 5000.0;
     
     private String fullname;
     private Integer department_type;
@@ -62,7 +63,7 @@ public class Employe {
             case 2 : pourcentageValeurSalariale = 0.15;
             break;
         }
-        return (this.seniority * (pourcentageValeurSalariale * this.getSalary()) - 5000);
+        return (this.seniority * (pourcentageValeurSalariale * this.getSalary()) - MONTANT_BASE_ANCIENNETE);
     }
     //Simon
     private Double getDiplomaAmount(){
@@ -85,11 +86,14 @@ public class Employe {
     }
     //Camille 
     public Double calculRenteProvincial(){
-        return 100.0;
+        return (getTotalSalary()* POURC_RENTE_PROV);
     }
     // Simon
     public Double calculRenteFederal(){
         return 100.00;
+    }
+    static public Double stringToDouble(String s){
+        return Double.parseDouble(s.replace(" $", ""));
     }
 
 @Override
