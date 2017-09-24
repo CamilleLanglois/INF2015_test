@@ -20,16 +20,12 @@ public class Employe {
     private Double hourly_rate_max;
 
     //Constructor
-    public Employe(String fullname, Integer department_type, Double hourly_rate_min, Double hourly_rate_max){
+    public Employe(String fullname, Integer department_type, Double hourly_rate_min, Double hourly_rate_max,
+                   Integer nbDiploma, Integer seniority, Double hourRate, Double workedHours){
         this.fullname = fullname;
         this.department_type = department_type;
         this.hourly_rate_min = hourly_rate_min;
         this.hourly_rate_max = hourly_rate_max;
-    }
-
-    public Employe(String fullname, Integer department_type, Double hourly_rate_min, Double hourly_rate_max,
-                   Integer nbDiploma, Integer seniority, Double hourRate, Double workedHours){
-        this(fullname, department_type, hourly_rate_min, hourly_rate_max);
         this.nbDiploma = nbDiploma;
         this.seniority = seniority;
         this.hourRate = hourRate;
@@ -74,7 +70,7 @@ public class Employe {
         return 20.00;
     }
     //Jade
-    public Double roundToFive(Double n) {
+    static public Double roundToFive(Double n) {
         Double n2=0.00;
         n2 = Math.ceil (n*20.00)/20.00;
         return n2;
@@ -98,7 +94,10 @@ public class Employe {
 
 @Override
     public String toString() {
+        return this.fullname;
+    }
+    public String toJSONString() {
         return "{\"name\":\""+this.fullname+"\"," +
-                "\"hour_rate\":"+this.hourRate+"}";
+                "\"valeur_par_employe\":"+this.getTotalSalary()+"}";
     }
 }

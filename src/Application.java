@@ -2,7 +2,6 @@
  * Created by davidboutet on 17-09-18.
  */
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.util.ArrayList;
 
 import manage.file.*;
@@ -25,7 +24,7 @@ public class Application {
         jsonToEmployeList(jsonObject);
 
         //write JSONObject to json file pass in argument
-        println("JSON writing: "+writeJson(jsonObject, outputFile));
+        println("JSON writing: "+writeJson(outputFile));
     }
 
     public static JSONObject getJsonFromFile(String source){
@@ -66,8 +65,9 @@ public class Application {
         return succeed;
     }
 
-    public static Boolean writeJson(JSONObject json, String filename){
+    public static Boolean writeJson(String filename){
         Boolean succeed = false;
+        JSONObject json = formatJson(finalEmployeList);
         try {
             FileManager.createFileFromStringContent("output", filename, json.toString());
             succeed = true;
@@ -75,6 +75,23 @@ public class Application {
             println(e.getMessage());
         }
         return succeed;
+    }
+
+    public static JSONObject formatJson(ArrayList<Employe> listEmploye){
+        JSONObject json = new JSONObject();
+        Double total_value = 0.00,
+               total_rente_provincial = 0.00,
+               total_rente_federal = 0.00;
+        for(Employe e:listEmploye){
+            total_value += e.getTotalSalary();
+            total_rente_provincial += e.calculRenteProvincial();
+            total_rente_federal += e.calculRenteFederal();
+            json.accumulate("salaires", e.toJSONString());
+        }
+        json.accumulate("valeur_total", Employe.roundToFive(total_value)+" $");
+        json.accumulate("rente_provinciale", Employe.roundToFive(total_rente_provincial)+" $");
+        json.accumulate("rente_federal", Employe.roundToFive(total_rente_federal)+" $");
+        return json;
     }
 
     public static void println(Object o){
