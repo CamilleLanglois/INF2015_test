@@ -98,6 +98,6 @@ public class Employe {
     }
     public String toJSONString() {
         return "{\"name\":\""+this.fullname+"\"," +
-                "\"valeur_par_employe\":"+this.getTotalSalary()+"}";
+                "\"valeur_par_employe\":"+roundToFive(this.getTotalSalary())+" $"+"}";
     }
 }
