@@ -46,8 +46,8 @@ public class Application {
         Boolean succeed = false;
         try{
             Integer department_type = jsonObject.getInt("type_departement");
-            Double taux_min = jsonObject.getDouble("taux_horaire_min"),
-                   taux_max = jsonObject.getDouble("taux_horaire_max");
+            Double taux_min = Employe.stringToDouble(jsonObject.getString("taux_horaire_min")),
+                   taux_max = Employe.stringToDouble(jsonObject.getString("taux_horaire_max"));
             JSONArray employeArray = jsonObject.getJSONArray("employes");
             for (int i = 0; i<employeArray.size(); i++){
                 JSONObject employe = (JSONObject)employeArray.get(i);
@@ -79,7 +79,7 @@ public class Application {
 
     public static JSONObject formatJson(ArrayList<Employe> listEmploye){
         JSONObject json = new JSONObject();
-        Double total_value = 0.00,
+        Double total_value = 0.00, // ajouter la constante MONTANT_FIXE
                total_rente_provincial = 0.00,
                total_rente_federal = 0.00;
         for(Employe e:listEmploye){
