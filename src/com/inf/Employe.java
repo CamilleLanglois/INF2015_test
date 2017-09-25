@@ -1,4 +1,5 @@
 package com.inf;
+import java.text.DecimalFormat;
 
 /**
  * Created by davidboutet on 17-09-18.
@@ -6,7 +7,7 @@ package com.inf;
 public class Employe {
     
     private final Integer NB_DIPLOMES_BASE = 2;
-    private final Double MONTANT_FIXE = 9733.70;
+    public static final Double MONTANT_FIXE = 9733.70;
     private final Double POURC_RENTE_PROV = 0.072;
     private final Double POURC_RENTE_FED = 0.125;
     private final Double MONTANT_BASE_ANCIENNETE = 5000.0;
@@ -26,7 +27,7 @@ public class Employe {
         this.department_type = department_type;
         this.hourly_rate_min = hourly_rate_min;
         this.hourly_rate_max = hourly_rate_max;
-        this.nbDiploma = nbDiploma;
+        this.nbDiploma = nbDiploma + NB_DIPLOMES_BASE;
         this.seniority = seniority;
         this.workedHours = workedHours;
     }
@@ -66,7 +67,33 @@ public class Employe {
     //Simon
     private Double getDiplomaAmount(){
 
-        return 20.00;
+        double diplomaAmount = 0;
+                
+        if(null != this.department_type)switch (this.department_type) {
+            case 0:
+                diplomaAmount = 0;
+                break;
+            case 1:
+                if(this.workedHours <= 500)
+                    diplomaAmount = 0;
+                else if(this.workedHours > 500 && this.workedHours <= 10000)
+                    diplomaAmount = this.nbDiploma*500;
+                else
+                    diplomaAmount = this.nbDiploma*1000;
+                break;
+            case 2:
+                if(this.workedHours <= 500)
+                    diplomaAmount = this.nbDiploma*500;
+                else if(this.workedHours > 500)
+                    diplomaAmount = this.nbDiploma*1500;
+                break;
+            default:
+                break;
+        }
+        if(diplomaAmount>5000)
+            diplomaAmount=5000;
+        
+        return diplomaAmount;
     }
     //Jade
     static public Double roundToFive(Double n) {
@@ -74,9 +101,14 @@ public class Employe {
         n2 = Math.ceil (n*20.00)/20.00;
         return n2;
     }
-    // Simon
+    
+     static public String twoDigits(Double n) {
+        DecimalFormat df = new DecimalFormat ("0.00");
+        return df.format(n);
+    }
+    
     private Double averageRate(Double minRate, Double maxRate) {
-        return 20.00;
+        return (minRate+maxRate)/2;
     }
     //Camille
     public Double getTotalSalary(){
@@ -88,7 +120,7 @@ public class Employe {
     }
     // Simon
     public Double calculRenteFederal(){
-        return 100.00;
+        return (getTotalSalary()+ calculRenteProvincial())* POURC_RENTE_FED;
     }
     static public Double stringToDouble(String s){
         return Double.parseDouble(s.replace(" $", ""));
@@ -100,6 +132,6 @@ public class Employe {
     }
     public String toJSONString() {
         return "{\"name\":\""+this.fullname+"\"," +
-                "\"valeur_par_employe\":"+roundToFive(this.getTotalSalary())+" $"+"}";
+                "\"valeur_par_employe\":"+twoDigits(this.getTotalSalary())+" $"+"}";
     }
 }

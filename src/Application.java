@@ -78,7 +78,7 @@ public class Application {
 
     public static JSONObject formatJson(ArrayList<Employe> listEmploye){
         JSONObject json = new JSONObject();
-        Double total_value = 0.00, // ajouter la constante MONTANT_FIXE
+        Double total_value = Employe.MONTANT_FIXE,
                total_rente_provincial = 0.00,
                total_rente_federal = 0.00;
         for(Employe e:listEmploye){
@@ -87,9 +87,9 @@ public class Application {
             total_rente_federal += e.calculRenteFederal();
             json.accumulate("salaires", e.toJSONString());
         }
-        json.accumulate("valeur_total", Employe.roundToFive(total_value)+" $");
-        json.accumulate("rente_provinciale", Employe.roundToFive(total_rente_provincial)+" $");
-        json.accumulate("rente_federal", Employe.roundToFive(total_rente_federal)+" $");
+        json.accumulate("valeur_total", Employe.twoDigits(Employe.roundToFive(total_value))+" $");
+        json.accumulate("rente_provinciale", Employe.twoDigits(Employe.roundToFive(total_rente_provincial))+" $");
+        json.accumulate("rente_federal", Employe.twoDigits(Employe.roundToFive(total_rente_federal))+" $");
         return json;
     }
 
