@@ -106,7 +106,7 @@ public class Employe {
     
      static public String twoDigits(Double n) {
         DecimalFormat df = new DecimalFormat ("0.00");
-        return df.format(n);
+        return df.format(n).replace(',','.');
     }
     
     private Double averageRate() {
