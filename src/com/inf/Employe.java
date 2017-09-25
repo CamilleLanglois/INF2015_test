@@ -44,7 +44,7 @@ public class Employe {
                 valeurSalarialeSelonHeureTaux = this.workedHours + this.hourly_rate_min;
                 break;
             case 1:
-                valeurSalarialeSelonHeureTaux = this.workedHours * ((this.hourly_rate_min*this.hourly_rate_max)/2);
+                valeurSalarialeSelonHeureTaux = this.workedHours * this.averageRate();
                 break;
             case 2 :
                 valeurSalarialeSelonHeureTaux = this.workedHours * this.hourly_rate_max;
@@ -109,8 +109,8 @@ public class Employe {
         return df.format(n);
     }
     
-    private Double averageRate(Double minRate, Double maxRate) {
-        return (minRate+maxRate)/2;
+    private Double averageRate() {
+        return (this.hourly_rate_min+this.hourly_rate_max)/2;
     }
     //Camille
     public Double getTotalSalary(){
