@@ -83,8 +83,6 @@ public class Application {
                total_rente_federal = 0.00;
         for(Employe e:listEmploye){
             total_value += e.getTotalSalary();
-            //total_rente_provincial += e.calculRenteProvincial();
-            //total_rente_federal += e.calculRenteFederal();
             json.accumulate("salaires", e.toJSONString());
         }
         total_rente_provincial = Employe.calculRenteProvincial(total_value);
