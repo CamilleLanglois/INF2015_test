@@ -1,4 +1,6 @@
 package com.inf;
+import net.sf.json.JSONObject;
+
 import java.text.DecimalFormat;
 
 /**
@@ -131,7 +133,9 @@ public class Employe {
         return this.fullname;
     }
     public String toJSONString() {
-        return "{\"name\":\""+this.fullname+"\"," +
-                "\"valeur_par_employe\":"+twoDigits(this.getTotalSalary())+" $"+"}";
+        JSONObject json = new JSONObject();
+        json.accumulate("name", this.fullname);
+        json.accumulate("valeur_par_employe", twoDigits(this.getTotalSalary())+" $");
+        return json.toString();
     }
 }
