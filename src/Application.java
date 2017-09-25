@@ -83,10 +83,12 @@ public class Application {
                total_rente_federal = 0.00;
         for(Employe e:listEmploye){
             total_value += e.getTotalSalary();
-            total_rente_provincial += e.calculRenteProvincial();
-            total_rente_federal += e.calculRenteFederal();
+            //total_rente_provincial += e.calculRenteProvincial();
+            //total_rente_federal += e.calculRenteFederal();
             json.accumulate("salaires", e.toJSONString());
         }
+        total_rente_provincial = Employe.calculRenteProvincial(total_value);
+        total_rente_federal = Employe.calculRenteFederal(total_value);
         json.accumulate("valeur_total", Employe.twoDigits(Employe.roundToFive(total_value))+" $");
         json.accumulate("rente_provinciale", Employe.twoDigits(Employe.roundToFive(total_rente_provincial))+" $");
         json.accumulate("rente_federal", Employe.twoDigits(Employe.roundToFive(total_rente_federal))+" $");

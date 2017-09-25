@@ -10,8 +10,8 @@ public class Employe {
     
     private final Integer NB_DIPLOMES_BASE = 2;
     public static final Double MONTANT_FIXE = 9733.70;
-    private final Double POURC_RENTE_PROV = 0.072;
-    private final Double POURC_RENTE_FED = 0.125;
+    private static final Double POURC_RENTE_PROV = 0.072;
+    private static final Double POURC_RENTE_FED = 0.125;
     private final Double MONTANT_BASE_ANCIENNETE = 5000.0;
     
     private String fullname;
@@ -117,12 +117,12 @@ public class Employe {
         return getSalary()+getSeniorityAmount()+getDiplomaAmount();
     }
     //Camille 
-    public Double calculRenteProvincial(){
-        return (getTotalSalary()* POURC_RENTE_PROV);
+    static public Double calculRenteProvincial(Double total){
+        return (total * POURC_RENTE_PROV);
     }
     // Simon
-    public Double calculRenteFederal(){
-        return (getTotalSalary()+ calculRenteProvincial())* POURC_RENTE_FED;
+    static public Double calculRenteFederal(Double total){
+        return (total + calculRenteProvincial(total))* POURC_RENTE_FED;
     }
     static public Double stringToDouble(String s){
         return Double.parseDouble(s.replace(" $", ""));
