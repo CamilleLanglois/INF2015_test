@@ -78,18 +78,20 @@ public class Application {
 
     public static JSONObject formatJson(ArrayList<Employe> listEmploye){
         JSONObject json = new JSONObject();
+        JSONArray salaires = new JSONArray();
         Double total_value = Employe.MONTANT_FIXE,
                total_rente_provincial = 0.00,
                total_rente_federal = 0.00;
         for(Employe e:listEmploye){
             total_value += e.getTotalSalary();
-            json.accumulate("salaires", e.toJSONString());
+            salaires.add(e.toJSONString());
         }
         total_rente_provincial = Employe.calculRenteProvincial(total_value);
         total_rente_federal = Employe.calculRenteFederal(total_value);
         json.accumulate("valeur_total", Employe.twoDigits(Employe.roundToFive(total_value))+" $");
         json.accumulate("rente_provinciale", Employe.twoDigits(Employe.roundToFive(total_rente_provincial))+" $");
         json.accumulate("rente_federal", Employe.twoDigits(Employe.roundToFive(total_rente_federal))+" $");
+        json.accumulate("salaires", salaires);
         return json;
     }
 
