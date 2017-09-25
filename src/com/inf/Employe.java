@@ -15,21 +15,19 @@ public class Employe {
     private Integer department_type;
     private Integer nbDiploma;
     private Integer seniority;
-    private Double hourRate;
     private Double workedHours;
     private Double hourly_rate_min;
     private Double hourly_rate_max;
 
     //Constructor
     public Employe(String fullname, Integer department_type, Double hourly_rate_min, Double hourly_rate_max,
-                   Integer nbDiploma, Integer seniority, Double hourRate, Double workedHours){
+                   Integer nbDiploma, Integer seniority, Double workedHours){
         this.fullname = fullname;
         this.department_type = department_type;
         this.hourly_rate_min = hourly_rate_min;
         this.hourly_rate_max = hourly_rate_max;
         this.nbDiploma = nbDiploma;
         this.seniority = seniority;
-        this.hourRate = hourRate;
         this.workedHours = workedHours;
     }
 

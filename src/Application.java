@@ -53,9 +53,8 @@ public class Application {
                 JSONObject employe = (JSONObject)employeArray.get(i);
                 Integer nbDiploma = employe.getInt("nombre_diplomes"),
                         seniority = employe.getInt("nombre_droit_anciennete");
-//                Double hour_rate = employe.getDouble("charge_travail");
                 Double worked_hour = employe.getDouble("charge_travail");
-                Employe e = new Employe(employe.getString("nom"), department_type, taux_min, taux_max, nbDiploma, seniority, 0.00, worked_hour);
+                Employe e = new Employe(employe.getString("nom"), department_type, taux_min, taux_max, nbDiploma, seniority, worked_hour);
                 finalEmployeList.add(e);
             }
             succeed = true;
