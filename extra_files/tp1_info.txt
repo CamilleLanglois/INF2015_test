@@ -1,0 +1,14 @@
+//NORME D'ÉQUIPE//
+Variable: camelCase (demoVariable)
+Constante: Majuscule avec underscore(CONSTANTE_DEMO)
+Langue: Anglais(variable, constante, methode, classe, etc..)
+
+
+//DISTRIBUTION DES TÂCHES//
+David: vérifier si le fichier existant et fichier de sorti, changer le français pour l'anglais, markdown
+Simon: commentaire et réduire les méthodes
+Jade: modification des spécifications du client, validation
+Camille: validation, validation des entrées, support double(',' et '.')
+
+//AUTRES INFORMATION//
+
