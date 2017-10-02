@@ -1,3 +1,7 @@
+//RUN-APP//
+Arguments: input/entree.json output.json
+
+
 //NORME D'ÉQUIPE//
 Variable: camelCase (demoVariable)
 Constante: Majuscule avec underscore(CONSTANTE_DEMO)
@@ -9,6 +13,7 @@ David: vérifier si le fichier existant et fichier de sorti, changer le françai
 Simon: commentaire et réduire les méthodes
 Jade: modification des spécifications du client, validation
 Camille: validation, validation des entrées, support double(',' et '.')
+
 
 //AUTRES INFORMATION//
 
