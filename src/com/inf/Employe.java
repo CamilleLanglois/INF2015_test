@@ -2,61 +2,69 @@ package com.inf;
 import net.sf.json.JSONObject;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 /**
  * Created by davidboutet on 17-09-18.
  */
 public class Employe {
-    
-    private final Integer NB_DIPLOMES_BASE = 2;
-    public static final Double MONTANT_FIXE = 9733.70;
-    private static final Double POURC_RENTE_PROV = 0.072;
-    private static final Double POURC_RENTE_FED = 0.125;
-    private final Double MONTANT_BASE_ANCIENNETE = 5000.0;
-    
+    //public static variables
+    public static ArrayList<Employe> finalEmployeList = new ArrayList<Employe>();
+
+    //public static constant
+    public static final Double FIXED_AMOUNT = 9733.70;
+
+    //private static constant
+    private static final Double POURC_ANNUITY_PROV = 0.072;
+    private static final Double POURC_ANNUITY_FED = 0.125;
+
+    //private constant
+    private final Integer NB_DIPLOMA_BASE = 2;
+    private final Double BASE_AMOUT_SENIORITY = 5000.0;
+
+    //private variable
     private String fullname;
-    private Integer department_type;
+    private Integer departmentType;
     private Integer nbDiploma;
     private Integer seniority;
     private Double workedHours;
-    private Double hourly_rate_min;
-    private Double hourly_rate_max;
+    private Double hourlyRateMin;
+    private Double hourlYRateMax;
 
     //Constructor
-    public Employe(String fullname, Integer department_type, Double hourly_rate_min, Double hourly_rate_max,
+    public Employe(String fullname, Integer departmentType, Double hourlyRateMin, Double hourlYRateMax,
                    Integer nbDiploma, Integer seniority, Double workedHours){
         this.fullname = fullname;
-        this.department_type = department_type;
-        this.hourly_rate_min = hourly_rate_min;
-        this.hourly_rate_max = hourly_rate_max;
-        this.nbDiploma = nbDiploma + NB_DIPLOMES_BASE;
+        this.departmentType = departmentType;
+        this.hourlyRateMin = hourlyRateMin;
+        this.hourlYRateMax = hourlYRateMax;
+        this.nbDiploma = nbDiploma + NB_DIPLOMA_BASE;
         this.seniority = seniority;
         this.workedHours = workedHours;
+        addEmployeToList();
     }
 
-    //Methods
-    
-    // charge de travail - Jade
+    //private methods
     private Double getSalary(){
         Double valeurSalarialeSelonHeureTaux = 0.0;
-        switch(this.department_type) {
+        switch(this.departmentType) {
             case 0:
-                valeurSalarialeSelonHeureTaux = this.workedHours + this.hourly_rate_min;
+                valeurSalarialeSelonHeureTaux = this.workedHours + this.hourlyRateMin;
                 break;
             case 1:
                 valeurSalarialeSelonHeureTaux = this.workedHours * this.averageRate();
                 break;
             case 2 :
-                valeurSalarialeSelonHeureTaux = this.workedHours * this.hourly_rate_max;
+                valeurSalarialeSelonHeureTaux = this.workedHours * this.hourlYRateMax;
                 break;
         }
         return valeurSalarialeSelonHeureTaux;
     }
-    //Camille
+
     private Double getSeniorityAmount(){
         Double pourcentageValeurSalariale = 0.0;
         
-        switch(this.department_type) {
+        switch(this.departmentType) {
             case 0: pourcentageValeurSalariale = 0.05;
             break;
             case 1: pourcentageValeurSalariale = 0.1;
@@ -64,14 +72,14 @@ public class Employe {
             case 2 : pourcentageValeurSalariale = 0.15;
             break;
         }
-        return (this.seniority * (pourcentageValeurSalariale * this.getSalary()) - MONTANT_BASE_ANCIENNETE);
+        return (this.seniority * (pourcentageValeurSalariale * this.getSalary()) - BASE_AMOUT_SENIORITY);
     }
-    //Simon
+
     private Double getDiplomaAmount(){
 
         double diplomaAmount = 0;
                 
-        if(null != this.department_type)switch (this.department_type) {
+        if(null != this.departmentType)switch (this.departmentType) {
             case 0:
                 diplomaAmount = 0;
                 break;
@@ -97,36 +105,43 @@ public class Employe {
         
         return diplomaAmount;
     }
-    //Jade
+    
+    private Double averageRate() {
+        return (this.hourlyRateMin +this.hourlYRateMax)/2;
+    }
+
+    public Double getTotalSalary(){
+        return getSalary()+getSeniorityAmount()+getDiplomaAmount();
+    }
+
+    private void addEmployeToList(){
+        finalEmployeList.add(this);
+    }
+
+
+    //static public method
     static public Double roundToFive(Double n) {
         Double n2=0.00;
         n2 = Math.ceil (n*20.00)/20.00;
         return n2;
     }
-    
-     static public String twoDigits(Double n) {
+
+    static public String twoDigits(Double n) {
         DecimalFormat df = new DecimalFormat ("0.00");
         return df.format(n).replace(',','.');
     }
-    
-    private Double averageRate() {
-        return (this.hourly_rate_min+this.hourly_rate_max)/2;
-    }
-    //Camille
-    public Double getTotalSalary(){
-        return getSalary()+getSeniorityAmount()+getDiplomaAmount();
-    }
-    //Camille 
+
     static public Double calculRenteProvincial(Double total){
-        return (total * POURC_RENTE_PROV);
+        return (total * POURC_ANNUITY_PROV);
     }
-    // Simon
+
     static public Double calculRenteFederal(Double total){
-        return (total + calculRenteProvincial(total))* POURC_RENTE_FED;
+        return (total + calculRenteProvincial(total))* POURC_ANNUITY_FED;
     }
     static public Double stringToDouble(String s){
         return Double.parseDouble(s.replace(" $", ""));
     }
+
 
 @Override
     public String toString() {

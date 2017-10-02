@@ -3,83 +3,67 @@
  */
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-
 import manage.file.*;
 import net.sf.json.*;
-
-
 import com.inf.Employe;
 
-
 public class Application {
-    static ArrayList<Employe> finalEmployeList = new ArrayList<Employe>();
     public static void main(String[] args){
-        String filePath = args[0];
-        String outputFile = args[1];
-
-        //load external json file(name in argument) and return it as a JSONObject
-        JSONObject jsonObject = getJsonFromFile(filePath);
-        
-        //parse JSON object to required output format
-        jsonToEmployeList(jsonObject);
-
-        //write JSONObject to json file pass in argument
-        println("JSON writing: "+writeJson(outputFile));
+        String filePath = args[0], outputFile = args[1];
+        try{
+            JSONObject jsonObject = getJsonFromFile(filePath);
+            createEmployeFromJson(jsonObject);
+            writeJson(outputFile);
+        }catch (FileNotFoundException e){
+            writeErrorJson(outputFile, e.getMessage());
+        }
     }
 
-    public static JSONObject getJsonFromFile(String source){
-        JSONObject jsonObject = null;
+    public static JSONObject getJsonFromFile(String source) throws FileNotFoundException{
+        JSONObject jsonObject;
         try{
             String myJSON = FileManager.createStringFromFileContent(source, "");
             jsonObject = JSONObject.fromObject(myJSON);
-        }catch(FileNotFoundException fe){
-            fe.printStackTrace();
-        }catch(Exception e)
-        {
-            e.printStackTrace();
+        }catch(Exception e){
+            throw new FileNotFoundException("Input json path could not be found.("+source+")");
         }
         return jsonObject;
     }
 
     //A voir si on devrait le mettre dans la classe Employe.java
-    public static Boolean jsonToEmployeList(JSONObject jsonObject){
-        Boolean succeed = false;
-        try{
-            Integer department_type = jsonObject.getInt("type_departement");
-            Double taux_min = Employe.stringToDouble(jsonObject.getString("taux_horaire_min")),
-                   taux_max = Employe.stringToDouble(jsonObject.getString("taux_horaire_max"));
-            JSONArray employeArray = jsonObject.getJSONArray("employes");
-            for (int i = 0; i<employeArray.size(); i++){
-                JSONObject employe = (JSONObject)employeArray.get(i);
-                Integer nbDiploma = employe.getInt("nombre_diplomes"),
-                        seniority = employe.getInt("nombre_droit_anciennete");
-                Double worked_hour = employe.getDouble("charge_travail");
-                Employe e = new Employe(employe.getString("nom"), department_type, taux_min, taux_max, nbDiploma, seniority, worked_hour);
-                finalEmployeList.add(e);
-            }
-            succeed = true;
-        }catch (Exception e){
-            println(e.getMessage());
+    public static void createEmployeFromJson(JSONObject jsonObject){
+        Double taux_min = Employe.stringToDouble(jsonObject.getString("taux_horaire_min")),
+               taux_max = Employe.stringToDouble(jsonObject.getString("taux_horaire_max"));
+        JSONArray employeArray = jsonObject.getJSONArray("employes");
+        for (int i = 0; i<employeArray.size(); i++){
+            JSONObject employe = (JSONObject)employeArray.get(i);
+            new Employe(employe.getString("nom"), jsonObject.getInt("type_departement"), taux_min, taux_max, employe.getInt("nombre_diplomes"), employe.getInt("nombre_droit_anciennete"), employe.getDouble("charge_travail"));
         }
-        return succeed;
     }
 
-    public static Boolean writeJson(String filename){
-        Boolean succeed = false;
-        JSONObject json = formatJson(finalEmployeList);
+    public static void writeJson(String filename){
+        JSONObject json = formatJson(Employe.finalEmployeList);
         try {
             FileManager.createFileFromStringContent("output", filename, json.toString());
-            succeed = true;
         }catch (Exception e){
-            println(e.getMessage());
+            println("The file could not be written.");
         }
-        return succeed;
+    }
+
+    public static void writeErrorJson(String filename, String errorMessage){
+        try {
+            JSONObject jsonError = new JSONObject();
+            jsonError.accumulate("error", errorMessage);
+            FileManager.createFileFromStringContent("output", filename, jsonError.toString());
+        }catch (Exception e){
+            println("The file could not be written.");
+        }
     }
 
     public static JSONObject formatJson(ArrayList<Employe> listEmploye){
         JSONObject json = new JSONObject();
         JSONArray salaires = new JSONArray();
-        Double total_value = Employe.MONTANT_FIXE,
+        Double total_value = Employe.FIXED_AMOUNT,
                total_rente_provincial = 0.00,
                total_rente_federal = 0.00;
         for(Employe e:listEmploye){
