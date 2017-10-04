@@ -24,10 +24,10 @@ public class Validation {
 
     }
     public static void dateIsValid(String date) throws Exception {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        sdf.setLenient(false);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
         try {
-            sdf.parse(date);
+            dateFormat.parse(date);
         } catch (ParseException e) {
             throw new Exception("Incorrect date format in JSON");
         }
