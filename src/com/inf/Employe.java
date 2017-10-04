@@ -133,9 +133,6 @@ public class Employe {
         else
             return this.nbDiploma*1000;
     }
-    
-    
-
 
 @Override
     public String toString() {
@@ -150,8 +147,7 @@ public class Employe {
 }
 
 class InvalidDepartmentType extends Exception {
-        
-        public InvalidDepartmentType(){
+    public InvalidDepartmentType(){
         System.out.println("Invalid department type entry !");
-        }
     }
+}

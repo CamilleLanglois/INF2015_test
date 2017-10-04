@@ -54,9 +54,13 @@ public class Utils {
     public static JSONObject formatJson(ArrayList<Employe> listEmploye){
         JSONArray salaries = new JSONArray();
         Double totalValue = Employe.FIXED_AMOUNT;
-        for(Employe e:listEmploye){
-            totalValue += e.getTotalSalary();
-            salaries.add(e.toJSONString());
+        try{
+            for(Employe e:listEmploye){
+                totalValue += e.getTotalSalary();
+                salaries.add(e.toJSONString());
+            }
+        }catch (Exception e){
+            println(e.getMessage());
         }
         return addToJson(totalValue, Employe.calculRenteProvincial(totalValue), Employe.calculRenteFederal(totalValue), salaries);
     }
