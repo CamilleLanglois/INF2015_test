@@ -16,6 +16,7 @@ public class Utils {
         try{
             String myJSON = FileManager.createStringFromFileContent(source, "");
             jsonObject = JSONObject.fromObject(myJSON);
+            
         }catch(Exception e){
             throw new FileNotFoundException("Input json path could not be found.("+source+")");
         }
@@ -23,13 +24,18 @@ public class Utils {
     }
 
     public static void createEmployeFromJson(JSONObject jsonObject)throws Exception{
+        Validation.objContainsAllProperties(jsonObject);
         Double minRate = Employe.stringToDouble(jsonObject.getString("taux_horaire_min")),
                maxRate = Employe.stringToDouble(jsonObject.getString("taux_horaire_max"));
         JSONArray employeArray = jsonObject.getJSONArray("employes");
-        System.out.println(employeArray.size());
         Validation.hasEmploye(employeArray);
+        Validation.arrContainsAllProperties(employeArray);
         for (Object e:employeArray){
             JSONObject employe = (JSONObject)e;
+            // rassembler validation des propriétés dans classe Validation
+            Validation.dateIsValid(employe.getString("date_revision_salaire"));
+            Validation.workedHoursIsValid(employe.getDouble("charge_travail"));
+            //
             new Employe(employe.getString("nom"), jsonObject.getInt("type_departement"), minRate, maxRate, employe.getInt("nombre_diplomes"), employe.getInt("nombre_droit_anciennete"), employe.getDouble("charge_travail"));
         }
     }
