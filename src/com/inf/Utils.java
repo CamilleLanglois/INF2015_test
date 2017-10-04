@@ -22,10 +22,12 @@ public class Utils {
         return jsonObject;
     }
 
-    public static void createEmployeFromJson(JSONObject jsonObject){
+    public static void createEmployeFromJson(JSONObject jsonObject)throws Exception{
         Double minRate = Employe.stringToDouble(jsonObject.getString("taux_horaire_min")),
                maxRate = Employe.stringToDouble(jsonObject.getString("taux_horaire_max"));
         JSONArray employeArray = jsonObject.getJSONArray("employes");
+        System.out.println(employeArray.size());
+        Validation.hasEmploye(employeArray);
         for (Object e:employeArray){
             JSONObject employe = (JSONObject)e;
             new Employe(employe.getString("nom"), jsonObject.getInt("type_departement"), minRate, maxRate, employe.getInt("nombre_diplomes"), employe.getInt("nombre_droit_anciennete"), employe.getDouble("charge_travail"));
