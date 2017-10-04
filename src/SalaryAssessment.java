@@ -12,7 +12,7 @@ public class SalaryAssessment {
             JSONObject jsonObject = Utils.getJsonFromFile(filePath);
             Utils.createEmployeFromJson(jsonObject);
             Utils.writeJson(outputFile);
-        }catch (FileNotFoundException e){
+        }catch (Exception e){
             Utils.writeErrorJson(outputFile, e.getMessage());
         }
     }
