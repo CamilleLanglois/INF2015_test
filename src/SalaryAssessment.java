@@ -7,7 +7,7 @@ import manage.file.*;
 import net.sf.json.*;
 import com.inf.Employe;
 
-public class Application {
+public class SalaryAssessment {
     public static void main(String[] args){
         String filePath = args[0], outputFile = args[1];
         try{
@@ -41,7 +41,7 @@ public class Application {
         }
     }
 
-    public static void writeJson(String filename){
+    public static void writeJson(String filename) {
         JSONObject json = formatJson(Employe.finalEmployeList);
         try {
             FileManager.createFileFromStringContent("output", filename, json.toString());
@@ -60,7 +60,7 @@ public class Application {
         }
     }
 
-    public static JSONObject formatJson(ArrayList<Employe> listEmploye){
+    public static JSONObject formatJson(ArrayList<Employe> listEmploye) {
         JSONObject json = new JSONObject();
         JSONArray salaires = new JSONArray();
         Double total_value = Employe.FIXED_AMOUNT,
