@@ -17,14 +17,14 @@ import net.sf.json.*;
 public class Validation {
     
     //invalidDepartementType ? 
-    public static void depatementTypeIsValid(Integer departementType) throws Exception {
+    public static void invalidDepartmentType(Integer departementType) throws IllegalArgumentException {
         
         if ((departementType != 0) || (departementType !=1) || (departementType !=2))  {
-            throw new Exception("The type of departement must be 0, 1 or 2.");
+            throw new IllegalArgumentException("The type of departement must be 0, 1 or 2.");
         } 
     }
     
-    public static void seniorityIsValid(Integer seniority) throws Exception {
+    public static void seniorityIsValid(Integer seniority) throws IllegalArgumentException {
         
         if (seniority <= 0)  {
             throw new Exception("The seniority must be greater than or equal to 0.");

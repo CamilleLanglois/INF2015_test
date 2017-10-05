@@ -45,7 +45,7 @@ public class Employe {
     }
 
     //private methods
-    private Double getSalary() throws InvalidDepartmentType{
+    private Double getSalary() throws Validation.invalidDepartmentType{
         switch(this.departmentType) {
             case 0 : return this.workedHours + this.hourlyRateMin;   
             case 1 : return this.workedHours * this.averageRate();  
@@ -147,8 +147,9 @@ public class Employe {
     }
 }
 
-class InvalidDepartmentType extends Exception {
-    public InvalidDepartmentType(){
-        System.out.println("Invalid department type entry !");
-    }
-}
+//JE PENSE QUE JE LE FAIT DANS LA CLASSE VALIDATION ?? JADE 
+//class InvalidDepartmentType extends Exception {
+ //   public InvalidDepartmentType(){
+  //      System.out.println("Invalid department type entry !");
+  //  }
+//}

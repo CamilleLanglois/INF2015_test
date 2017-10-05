@@ -33,7 +33,7 @@ public class Utils {
         for (Object e:employeArray){
             JSONObject employe = (JSONObject)e;
             // rassembler validation des propriétés dans classe Validation
-          //erreur je vais y penser et le changer demain-Jade  Validation.nbDiplomaIsValid(employe.getInteger("nombre_diplomes"));
+            Validation.nbDiplomaIsValid(employe.getInt("nombre_diplomes"));
             Validation.dateIsValid(employe.getString("date_revision_salaire"));
             Validation.workedHoursIsValid(employe.getDouble("charge_travail"));
             //
