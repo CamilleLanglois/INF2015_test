@@ -131,6 +131,7 @@ public class Employe {
         return (total + calculRenteProvincial(total))* POURC_ANNUITY_FED;
     }
     static public Double stringToDouble(String s){
+        s = s.replaceAll(",", ".");
         return Double.parseDouble(s.replace(" $", ""));
     }
     
