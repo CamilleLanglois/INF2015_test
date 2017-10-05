@@ -16,6 +16,7 @@ import net.sf.json.*;
  */
 public class Validation {
     
+    //invalidDepartementType ? 
     public static void depatementTypeIsValid(Integer departementType) throws Exception {
         
         if ((departementType != 0) || (departementType !=1) || (departementType !=2))  {
@@ -58,11 +59,21 @@ public class Validation {
             throw new Exception("Incorrect date format in JSON");
         }
     }
+    
+    // À regarder si je le mets avec hasEmploye et si le nom est correct.
+    public static void sizeListEmployeIsValid(JSONArray employes) throws Exception {
+
+        if (employes.size() > 10) {
+            throw new Exception("Employe list should be less than or equal to 10.");
+        } 
+
+    }
+    
     public static void hasEmploye(JSONArray employes) throws Exception {
 
         if (employes.isEmpty()) {
             throw new Exception("Employe list is empty");
-        }
+        } 
 
     }
 
