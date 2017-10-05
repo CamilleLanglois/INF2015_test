@@ -32,7 +32,7 @@ public class Employe {
     private Double hourlYRateMax;
 
     //Constructor
-    public Employe(String fullname, Integer departmentType, Double hourlyRateMin, Double hourlYRateMax,
+   public Employe(String fullname, Integer departmentType, Double hourlyRateMin, Double hourlYRateMax,
                    Integer nbDiploma, Integer seniority, Double workedHours){
         this.fullname = fullname;
         this.departmentType = departmentType;
@@ -43,49 +43,88 @@ public class Employe {
         this.workedHours = workedHours;
         addEmployeToList();
     }
-
-    //private methods
-    private Double getSalary() throws InvalidDepartmentType{
-        switch(this.departmentType) {
-            case 0 : return this.workedHours + this.hourlyRateMin;   
-            case 1 : return this.workedHours * this.averageRate();  
-            case 2 : return this.workedHours * this.hourlYRateMax;
-            default : throw new InvalidDepartmentType();
-        }
-    }
-
-    private Double getSeniorityAmount() throws InvalidDepartmentType{
-        Double pourcentageValeurSalariale = 0.0;
-        
-        switch(this.departmentType) {
-            case 0: pourcentageValeurSalariale = 0.05; break;
-            case 1: pourcentageValeurSalariale = 0.1; break;
-            case 2 : pourcentageValeurSalariale = 0.15; break;
-            default :  throw new InvalidDepartmentType();
-        }
-        return (this.seniority * (pourcentageValeurSalariale * this.getSalary()) - BASE_AMOUT_SENIORITY);
-    }
-
-    private Double getDiplomaAmount() throws InvalidDepartmentType{
-        
-        switch (this.departmentType) {
-            case 0: return 0.0;
-            case 1: return calculateRegionalDiploma();
-            case 2: return calculateInternationalDiploma();
-            default:  throw new InvalidDepartmentType();
-        }
-          
-    }
-    
+   
     private Double averageRate() {
         return (this.hourlyRateMin +this.hourlYRateMax)/2;
     }
 
-    public Double getTotalSalary() throws InvalidDepartmentType{
+    public Double getTotalSalary(){
         
-        return getSalary()+getSeniorityAmount()+getDiplomaAmount();
+        switch (this.departmentType) {
+            case 0: return getNational();
+            case 1: return getRegional();
+            case 2: return getInternational();
+            default: return 0.0;
+        }
     }
 
+    private double getNational(){
+        return getNationalSalary() 
+        + getNationalSeniority()
+        + calculateNationalDiploma();
+    }
+    
+    private double getRegional(){
+        return getRegionalSalary()
+        + getRegionalSeniority()
+        + calculateRegionalDiploma();      
+    }
+    
+    private double getInternational(){
+        return getInternationalSalary()
+        + getInternationalSeniority()
+        + calculateInternationalDiploma();
+    }
+    
+    private double getNationalSalary() {
+        return this.workedHours + this.hourlyRateMin;
+    }
+    
+    private double getNationalSeniority() {
+        return this.seniority * (0.05 * (getNationalSalary())) - BASE_AMOUT_SENIORITY;
+    }
+
+    private double calculateNationalDiploma() {
+        return 0.0;
+    }
+    
+    private double getRegionalSalary() {
+        return this.workedHours * this.averageRate();
+    }
+    
+    private double getRegionalSeniority() {
+        return this.seniority * (0.1 * (getRegionalSalary())) - BASE_AMOUT_SENIORITY;
+    }
+
+    private double calculateRegionalDiploma() {
+        if(this.workedHours <= 500)
+            return 0;
+        else if(this.workedHours > 500 && this.workedHours <= 1000)
+            return this.nbDiploma*500;
+        else
+            return this.nbDiploma*1000;
+    }
+    
+    
+    private double getInternationalSalary() {
+        return this.workedHours * this.hourlYRateMax;
+    }
+    
+    private double getInternationalSeniority() {
+        return this.seniority * (0.15 * (getInternationalSalary())) - BASE_AMOUT_SENIORITY;
+    }
+    
+    private double calculateInternationalDiploma() {
+        double amount;
+        if(this.workedHours <= 500)
+            amount = this.nbDiploma*500;
+        else
+            amount = this.nbDiploma*1500;
+        if(amount>5000)
+            amount=5000;
+        return amount;
+    }
+    
     private void addEmployeToList(){
         finalEmployeList.add(this);
     }
@@ -111,35 +150,15 @@ public class Employe {
         return (total + calculRenteProvincial(total))* POURC_ANNUITY_FED;
     }
     static public Double stringToDouble(String s){
-        s = s.replaceAll(",",".");
         return Double.parseDouble(s.replace(" $", ""));
     }
     
-    private double calculateInternationalDiploma() {
-        double amount;
-        if(this.workedHours <= 500)
-            amount = this.nbDiploma*500;
-        else
-            amount = this.nbDiploma*1500;
-        if(amount>5000)
-            amount=5000;
-        return amount;
-    }
-
-    private double calculateRegionalDiploma() {
-        if(this.workedHours <= 500)
-            return 0;
-        else if(this.workedHours > 500 && this.workedHours <= 1000)
-            return this.nbDiploma*500;
-        else
-            return this.nbDiploma*1000;
-    }
 
 @Override
     public String toString() {
         return this.fullname;
     }
-    public String toJSONString() throws Exception {
+    public String toJSONString() {
         JSONObject json = new JSONObject();
         json.accumulate("name", this.fullname);
         json.accumulate("valeur_par_employe", twoDigits(this.getTotalSalary())+" $");
@@ -147,8 +166,3 @@ public class Employe {
     }
 }
 
-class InvalidDepartmentType extends Exception {
-    public InvalidDepartmentType(){
-        System.out.println("Invalid department type entry !");
-    }
-}
