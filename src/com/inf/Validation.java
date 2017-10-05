@@ -15,9 +15,19 @@ import net.sf.json.*;
  * @author Utilisateur
  */
 public class Validation {
+    
 
+    public static void nbDiplomaIsValid(Integer nbDiploma) throws Exception {
+        
+     if (nbDiploma <= 0)  {
+            throw new Exception("The number of diploma must be greater than or equal to 0.");
+        } else if (nbDiploma >= 5) {
+            throw new Exception("The number of diploma must be less than or equal to 5.");
+        }
+    }
+    
     public static void workedHoursIsValid(Double workedHours) throws Exception {
-
+     
         if ((workedHours < 0) || (workedHours > 1950)) {
             throw new Exception("Employes worked hours must be between 0 and 1950");
         }
