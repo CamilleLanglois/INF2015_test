@@ -20,16 +20,16 @@ public class Validation {
     
     public static void invalidDepartmentType(Integer departementType) throws IllegalArgumentException {
         
-        if ((departementType != 0) || (departementType !=1) || (departementType !=2))  {
+        if ((departementType != 0) && (departementType !=1) && (departementType !=2))  {
             throw new IllegalArgumentException("The type of departement must be 0, 1 or 2.");
         } 
     }
     
     public static void seniorityIsValid(Integer seniority) throws IllegalArgumentException {
         
-        if (seniority <= 0)  {
+        if (seniority < 0)  {
             throw new IllegalArgumentException("The seniority must be greater than or equal to 0.");
-        } else if (seniority >= 10) {
+        } else if (seniority > 10) {
             throw new IllegalArgumentException("The seniority must be less than or equal to 10.");
         }
     }
