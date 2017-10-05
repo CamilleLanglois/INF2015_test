@@ -28,7 +28,7 @@ public class Utils {
         Double minRate = Employe.stringToDouble(jsonObject.getString("taux_horaire_min")),
                maxRate = Employe.stringToDouble(jsonObject.getString("taux_horaire_max"));
         JSONArray employeArray = jsonObject.getJSONArray("employes");
-        Validation.hasEmploye(employeArray);
+        Validation.employeListIsValid(employeArray);
         Validation.arrContainsAllProperties(employeArray);
         for (Object e:employeArray){
             JSONObject employe = (JSONObject)e;
