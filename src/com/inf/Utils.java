@@ -35,7 +35,7 @@ public class Utils {
         for (Object e:employeArray){
             JSONObject employe = (JSONObject)e;
             
-            Validation.invalidDepartmentType(employe.getInt("type_departement"));
+            Validation.invalidDepartmentType(jsonObject.getInt("type_departement"));
             Validation.seniorityIsValid(employe.getInt("nombre_droit_anciennete"));
             Validation.nbDiplomaIsValid(employe.getInt("nombre_diplomes"));
             Validation.dateIsValid(employe.getString("date_revision_salaire"));
