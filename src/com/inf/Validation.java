@@ -16,7 +16,12 @@ import net.sf.json.*;
  */
 public class Validation {
     
-    
+    public static void depatementTypeIsValid(Integer departementType) throws Exception {
+        
+        if ((departementType != 0) || (departementType !=1) || (departementType !=2))  {
+            throw new Exception("The type of departement must be 0, 1 or 2.");
+        } 
+    }
     
     public static void seniorityIsValid(Integer seniority) throws Exception {
         
