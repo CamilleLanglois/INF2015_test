@@ -37,9 +37,9 @@ public class Validation {
 
     public static void nbDiplomaIsValid(Integer nbDiploma) throws IllegalArgumentException {
         
-        if (nbDiploma <= 0)  {
+        if (nbDiploma < 0)  {
             throw new IllegalArgumentException("The number of diploma must be greater than or equal to 0.");
-        } else if (nbDiploma >= 5) {
+        } else if (nbDiploma > 5) {
             throw new IllegalArgumentException("The number of diploma must be less than or equal to 5.");
         }
     }
@@ -49,8 +49,17 @@ public class Validation {
         if ((workedHours < 0) || (workedHours > 1950)) {
             throw new IllegalArgumentException("Employes worked hours must be between 0 and 1950");
         }
-
+        
     }
+    
+    
+    public static void invalidAmount(Double amount) throws IllegalArgumentException {
+        
+        if ( amount < 0)  {
+            throw new IllegalArgumentException("The amount must be greater than or equal to 0.");
+        } 
+    }
+    
     public static void dateIsValid(String date) throws InputMismatchException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
@@ -60,6 +69,8 @@ public class Validation {
             throw new InputMismatchException("Incorrect date format in JSON");
         }
     }
+    
+    
     
     
     public static void employeListIsValid(JSONArray employes) throws IndexOutOfBoundsException {
