@@ -47,29 +47,11 @@ public class Employe {
     public Double getTotalSalary(){
         
         switch (this.departmentType) {
-            case 0: return getNational();
-            case 1: return getRegional();
-            case 2: return getInternational();
-            default: return 0.0;
+            case 0: return getNationalSalary() + getNationalSeniority() + getNationalDiploma();
+            case 1: return getRegionalSalary() + getRegionalSeniority()+ getRegionalDiploma();
+            case 2: return getInternationalSalary()+ getInternationalSeniority() + getInternationalDiploma();
+            default: return 0.0; //TODO: lancer une exception
         }
-    }
-
-    private double getNational(){
-        return getNationalSalary() 
-        + getNationalSeniority()
-        + calculateNationalDiploma();
-    }
-    
-    private double getRegional(){
-        return getRegionalSalary()
-        + getRegionalSeniority()
-        + calculateRegionalDiploma();      
-    }
-    
-    private double getInternational(){
-        return getInternationalSalary()
-        + getInternationalSeniority()
-        + calculateInternationalDiploma();
     }
     
     private double getNationalSalary() {
@@ -80,7 +62,7 @@ public class Employe {
         return this.seniority * (0.05 * (getNationalSalary())) - BASE_AMOUT_SENIORITY;
     }
 
-    private double calculateNationalDiploma() {
+    private double getNationalDiploma() {
         return 0.0;
     }
     
@@ -92,7 +74,7 @@ public class Employe {
         return this.seniority * (0.1 * (getRegionalSalary())) - BASE_AMOUT_SENIORITY;
     }
 
-    private double calculateRegionalDiploma() {
+    private double getRegionalDiploma() {
         if(this.workedHours <= 500)
             return 0;
         else if(this.workedHours > 500 && this.workedHours <= 1000)
@@ -110,7 +92,7 @@ public class Employe {
         return this.seniority * (0.15 * (getInternationalSalary())) - BASE_AMOUT_SENIORITY;
     }
     
-    private double calculateInternationalDiploma() {
+    private double getInternationalDiploma() {
         double amount;
         if(this.workedHours <= 500)
             amount = this.nbDiploma*500;
