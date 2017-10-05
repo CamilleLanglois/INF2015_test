@@ -16,10 +16,21 @@ import net.sf.json.*;
  */
 public class Validation {
     
+    
+    
+    public static void seniorityIsValid(Integer seniority) throws Exception {
+        
+        if (seniority <= 0)  {
+            throw new Exception("The seniority must be greater than or equal to 0.");
+        } else if (seniority >= 10) {
+            throw new Exception("The seniority must be less than or equal to 10.");
+        }
+    }
+    
 
     public static void nbDiplomaIsValid(Integer nbDiploma) throws Exception {
         
-     if (nbDiploma <= 0)  {
+        if (nbDiploma <= 0)  {
             throw new Exception("The number of diploma must be greater than or equal to 0.");
         } else if (nbDiploma >= 5) {
             throw new Exception("The number of diploma must be less than or equal to 5.");
