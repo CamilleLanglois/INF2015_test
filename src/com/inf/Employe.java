@@ -129,7 +129,7 @@ public class Employe {
     private double calculateRegionalDiploma() {
         if(this.workedHours <= 500)
             return 0;
-        else if(this.workedHours > 500 && this.workedHours <= 10000)
+        else if(this.workedHours > 500 && this.workedHours <= 1000)
             return this.nbDiploma*500;
         else
             return this.nbDiploma*1000;
