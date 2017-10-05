@@ -43,21 +43,6 @@ public class Employe {
         this.workedHours = workedHours;
         addEmployeToList();
     }
-
-
-    //private methods
-    private Double getSalary(){
-        switch(this.departmentType) {
-            case 0 : return this.workedHours + this.hourlyRateMin;   
-            case 1 : return this.workedHours * this.averageRate();  
-            case 2 : return this.workedHours * this.hourlYRateMax;
-            default : return 0.0; // Est-ce nécessaire ? 
-        }
-    }
-   
-     private Double averageRate() {
-         return (this.hourlyRateMin +this.hourlYRateMax)/2;
-      }
     
     public Double getTotalSalary(){
         
@@ -140,6 +125,9 @@ public class Employe {
         finalEmployeList.add(this);
     }
 
+    private Double averageRate() {
+         return (this.hourlyRateMin +this.hourlYRateMax)/2;
+    }
 
     //static public method
     static public Double roundToFive(Double n) {
