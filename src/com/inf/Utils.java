@@ -5,6 +5,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by davidboutet on 17-10-03.
@@ -30,18 +31,9 @@ public class Utils {
         JSONArray employeArray = jsonObject.getJSONArray("employes");
         Validation.employeListIsValid(employeArray);
         Validation.arrContainsAllProperties(employeArray);
-        Validation.invalidAmount(minRate); 
-        Validation.invalidAmount(maxRate); 
         for (Object e:employeArray){
             JSONObject employe = (JSONObject)e;
-            
-            Validation.invalidDepartmentType(jsonObject.getInt("type_departement"));
-            Validation.seniorityIsValid(employe.getInt("nombre_droit_anciennete"));
-            Validation.nbDiplomaIsValid(employe.getInt("nombre_diplomes"));
-            Validation.dateIsValid(employe.getString("date_revision_salaire"));
-            Validation.workedHoursIsValid(employe.getDouble("charge_travail"));
-            
-            new Employe(employe.getString("nom"), jsonObject.getInt("type_departement"), minRate, maxRate, employe.getInt("nombre_diplomes"), employe.getInt("nombre_droit_anciennete"), employe.getDouble("charge_travail"));
+            new Employe(employe.getString("nom"), jsonObject.getInt("type_departement"), minRate, maxRate, employe.getInt("nombre_diplomes"), employe.getInt("nombre_droit_anciennete"), employe.getDouble("charge_travail"), employe.getString("date_revision_salaire"));
         }
     }
 

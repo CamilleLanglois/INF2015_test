@@ -3,6 +3,7 @@ import net.sf.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import com.inf.Validation;
 
 /**
  * Created by davidboutet on 17-09-18.
@@ -30,17 +31,20 @@ public class Employe {
     private Double workedHours;
     private Double hourlyRateMin;
     private Double hourlYRateMax;
+    private String salaryRevisionDate;
 
     //Constructor
    public Employe(String fullname, Integer departmentType, Double hourlyRateMin, Double hourlYRateMax,
-                   Integer nbDiploma, Integer seniority, Double workedHours){
+                   Integer nbDiploma, Integer seniority, Double workedHours, String salaryRevisionDate) throws Exception{
+
         this.fullname = fullname;
-        this.departmentType = departmentType;
-        this.hourlyRateMin = hourlyRateMin;
-        this.hourlYRateMax = hourlYRateMax;
-        this.nbDiploma = nbDiploma + NB_DIPLOMA_BASE;
-        this.seniority = seniority;
-        this.workedHours = workedHours;
+        this.departmentType = Validation.invalidDepartmentType(departmentType);
+        this.hourlyRateMin = Validation.invalidAmount(hourlyRateMin);
+        this.hourlYRateMax = Validation.invalidAmount(hourlYRateMax);
+        this.nbDiploma = Validation.nbDiplomaIsValid(nbDiploma) + NB_DIPLOMA_BASE;
+        this.seniority = Validation.seniorityIsValid(seniority);
+        this.workedHours = Validation.workedHoursIsValid(workedHours);
+        this.salaryRevisionDate = Validation.dateIsValid(salaryRevisionDate);
         addEmployeToList();
     }
     
