@@ -9,21 +9,17 @@ import com.inf.Validation;
  * Created by davidboutet on 17-09-18.
  */
 public class Employe {
-    //public static variables
+    
     public static ArrayList<Employe> finalEmployeList = new ArrayList<Employe>();
 
-    //public static constant
     public static final Double FIXED_AMOUNT = 9733.70;
 
-    //private static constant
     private static final Double POURC_ANNUITY_PROV = 0.072;
     private static final Double POURC_ANNUITY_FED = 0.125;
 
-    //private constant
     private final Integer NB_DIPLOMA_BASE = 2;
     private final Double BASE_AMOUT_SENIORITY = 5000.0;
 
-    //private variable
     private String fullname;
     private Integer departmentType;
     private Integer nbDiploma;
@@ -33,8 +29,8 @@ public class Employe {
     private Double hourlYRateMax;
     private String salaryRevisionDate;
 
-    //Constructor
-   public Employe(String fullname, Integer departmentType, Double hourlyRateMin, Double hourlYRateMax,
+   //we decided to put the validation in the constructor because we think it is more convenial
+    public Employe(String fullname, Integer departmentType, Double hourlyRateMin, Double hourlYRateMax,
                    Integer nbDiploma, Integer seniority, Double workedHours, String salaryRevisionDate) throws Exception{
 
         this.fullname = fullname;
@@ -48,37 +44,40 @@ public class Employe {
         addEmployeToList();
     }
     
-    public Double getTotalSalary(){
+    public Double calculateTotalSalary(){
         
         switch (this.departmentType) {
-            case 0: return getNationalSalary() + getNationalSeniority() + getNationalDiploma();
-            case 1: return getRegionalSalary() + getRegionalSeniority()+ getRegionalDiploma();
-            case 2: return getInternationalSalary()+ getInternationalSeniority() + getInternationalDiploma();
-            default: return 0.0; //TODO: lancer une exception
+            case 0: return calculateNationalSalary() + calculateNationalSeniority() + calculateNationalDiploma();
+            case 1: return calculateRegionalSalary() + calculateRegionalSeniority()+ calculateRegionalDiploma();
+            case 2: return calculateInternationalSalary()+ calculateInternationalSeniority() + calculateInternationalDiploma();
+            default: return 0.0; //the validation is already done in constructor
         }
     }
     
-    private double getNationalSalary() {
+    
+    private double calculateNationalSalary() {
         return this.workedHours + this.hourlyRateMin;
     }
     
-    private double getNationalSeniority() {
-        return this.seniority * (0.05 * (getNationalSalary())) - BASE_AMOUT_SENIORITY;
+    private double calculateNationalSeniority() {
+        return this.seniority * (0.05 * (calculateNationalSalary())) - BASE_AMOUT_SENIORITY;
     }
 
-    private double getNationalDiploma() {
+    //The amount for the national diploma equals to zero 
+    private double calculateNationalDiploma() {
         return 0.0;
     }
     
-    private double getRegionalSalary() {
-        return this.workedHours * this.averageRate();
+    
+    private double calculateRegionalSalary() {
+        return this.workedHours * this.calculateAverageRate();
     }
     
-    private double getRegionalSeniority() {
-        return this.seniority * (0.1 * (getRegionalSalary())) - BASE_AMOUT_SENIORITY;
+    private double calculateRegionalSeniority() {
+        return this.seniority * (0.1 * (calculateRegionalSalary())) - BASE_AMOUT_SENIORITY;
     }
 
-    private double getRegionalDiploma() {
+    private double calculateRegionalDiploma() {
         if(this.workedHours <= 500)
             return 0;
         else if(this.workedHours > 500 && this.workedHours <= 1000)
@@ -88,15 +87,15 @@ public class Employe {
     }
     
     
-    private double getInternationalSalary() {
+    private double calculateInternationalSalary() {
         return this.workedHours * this.hourlYRateMax;
     }
     
-    private double getInternationalSeniority() {
-        return this.seniority * (0.15 * (getInternationalSalary())) - BASE_AMOUT_SENIORITY;
+    private double calculateInternationalSeniority() {
+        return this.seniority * (0.15 * (calculateInternationalSalary())) - BASE_AMOUT_SENIORITY;
     }
     
-    private double getInternationalDiploma() {
+    private double calculateInternationalDiploma() {
         double amount;
         if(this.workedHours <= 500)
             amount = this.nbDiploma*500;
@@ -111,7 +110,7 @@ public class Employe {
         finalEmployeList.add(this);
     }
 
-    private Double averageRate() {
+    private Double calculateAverageRate() {
          return (this.hourlyRateMin +this.hourlYRateMax)/2;
     }
 
@@ -127,12 +126,12 @@ public class Employe {
         return df.format(n).replace(',','.');
     }
 
-    static public Double calculRenteProvincial(Double total){
+    static public Double calculateProvincialTax(Double total){
         return (total * POURC_ANNUITY_PROV);
     }
 
-    static public Double calculRenteFederal(Double total){
-        return (total + calculRenteProvincial(total))* POURC_ANNUITY_FED;
+    static public Double calculateFederalTax(Double total){
+        return (total + calculateProvincialTax(total))* POURC_ANNUITY_FED;
     }
     static public Double stringToDouble(String s){
         s = s.replaceAll(",", ".");
@@ -147,7 +146,7 @@ public class Employe {
     public String toJSONString() {
         JSONObject json = new JSONObject();
         json.accumulate("name", this.fullname);
-        json.accumulate("valeur_par_employe", twoDigits(this.getTotalSalary())+" $");
+        json.accumulate("valeur_par_employe", twoDigits(this.calculateTotalSalary())+" $");
         return json.toString();
     }
 }
