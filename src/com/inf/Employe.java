@@ -26,17 +26,17 @@ public class Employe {
     private Integer seniority;
     private Double workedHours;
     private Double hourlyRateMin;
-    private Double hourlYRateMax;
+    private Double hourlyRateMax;
     private String salaryRevisionDate;
 
    //we decided to put the validation in the constructor because we think it is more convenial
-    public Employe(String fullname, Integer departmentType, Double hourlyRateMin, Double hourlYRateMax,
+    public Employe(String fullname, Integer departmentType, Double hourlyRateMin, Double hourlyRateMax,
                    Integer nbDiploma, Integer seniority, Double workedHours, String salaryRevisionDate) throws Exception{
 
         this.fullname = fullname;
         this.departmentType = Validation.invalidDepartmentType(departmentType);
         this.hourlyRateMin = Validation.invalidAmount(hourlyRateMin);
-        this.hourlYRateMax = Validation.invalidAmount(hourlYRateMax);
+        this.hourlyRateMax = Validation.invalidAmount(hourlyRateMax);
         this.nbDiploma = Validation.nbDiplomaIsValid(nbDiploma) + NB_DIPLOMA_BASE;
         this.seniority = Validation.seniorityIsValid(seniority);
         this.workedHours = Validation.workedHoursIsValid(workedHours);
@@ -88,7 +88,7 @@ public class Employe {
     
     
     private double calculateInternationalSalary() {
-        return this.workedHours * this.hourlYRateMax;
+        return this.workedHours * this.hourlyRateMax;
     }
     
     private double calculateInternationalSeniority() {
@@ -111,7 +111,7 @@ public class Employe {
     }
 
     private Double calculateAverageRate() {
-         return (this.hourlyRateMin +this.hourlYRateMax)/2;
+         return (this.hourlyRateMin +this.hourlyRateMax)/2;
     }
 
     //static public method

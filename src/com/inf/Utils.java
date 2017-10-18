@@ -61,13 +61,13 @@ public class Utils {
         Double totalValue = Employe.FIXED_AMOUNT;
         try{
             for(Employe e:listEmploye){
-                totalValue += e.getTotalSalary();
+                totalValue += e.calculateTotalSalary();
                 salaries.add(e.toJSONString());
             }
         }catch (Exception e){
             println(e.getMessage());
         }
-        return addToJson(totalValue, Employe.calculRenteProvincial(totalValue), Employe.calculRenteFederal(totalValue), salaries);
+        return addToJson(totalValue, Employe.calculateProvincialTax(totalValue), Employe.calculateFederalTax(totalValue), salaries);
     }
 
     public static JSONObject addToJson(Double totalValue, Double totalAnnuityProvincial, Double totalAnnuityFederal, JSONArray salaries){
