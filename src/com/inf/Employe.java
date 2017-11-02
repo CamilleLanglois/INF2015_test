@@ -4,6 +4,8 @@ import net.sf.json.JSONObject;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import com.inf.Validation;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * Created by davidboutet on 17-09-18.
@@ -116,9 +118,11 @@ public class Employe {
 
     //static public method
     static public Double roundToFive(Double n) {
-        Double n2=0.00;
-        n2 = Math.ceil (n*20.00)/20.00;
-        return n2;
+        Double temp=0.00;
+        
+        temp = (Math.round(n*20.00))/20.00;
+
+        return temp;
     }
 
     static public String twoDigits(Double n) {
