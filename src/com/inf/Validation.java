@@ -71,6 +71,19 @@ public class Validation {
 
     }
     
+    // À VÉRIFIER 
+    public static void invalidFullName(JSONArray employes) throws IllegalArgumentException {
+        
+        for (int i = 0; i < employes.size(); i++) {
+            JSONArray t[] = (JSONArray[]) employes.get(i);
+            for (int j = 0; j < employes.size(); j++) {
+              if (t[0]==(employes.getJSONArray(j))) {
+                throw new IllegalArgumentException("Two employees should not have the same full name");
+              }
+            }       
+        }
+    }
+    
     public static void objContainsAllProperties(JSONObject objet) throws NoSuchFieldException {
         String[] depProperties = {"nom_departement", "type_departement", "taux_horaire_min", "taux_horaire_max", "employes"};
 
@@ -90,7 +103,11 @@ public class Validation {
                 if (!arr.getJSONObject(i).containsKey(empProperties[j])) {
                     throw new NoSuchFieldException("Employe array missing property : " + empProperties[j]);
                 }
+                
             }
         }
     }
+    
+    
+    
 }
