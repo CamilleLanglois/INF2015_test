@@ -2,6 +2,7 @@ package com.inf;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import net.sf.json.*;
 
@@ -58,9 +59,27 @@ public class Validation {
         return date;
     }
     
-    
-    
-    
+    public static Double checkTotalValue(Double totalValue){
+        if (totalValue > 500000.00){
+            new Recommandation("Total departement value should be lower than 500 000.00$");
+        }
+        return totalValue;
+    }
+    public static void checkEmployeValue(ArrayList<Employe> employes){
+        for(Employe e: employes){
+            if(e.calculateTotalSalary() > 150000.00){
+                new Recommandation("La valeur par employé de " + e.getFullName() + " est trop dispendieuse.");
+            }
+            
+        }
+    }
+    public static void checkWorkedHours(ArrayList<Employe> employes){
+        for(Employe e: employes){
+            if(e.getWorkedHours() < 500){
+                new Recommandation("La charge de travail de " + e.getFullName()+ " est inférieure à 500 heures");
+            }
+        }
+    }
     public static void employeListIsValid(JSONArray employes) throws IndexOutOfBoundsException {
 
         if (employes.isEmpty()) {
