@@ -21,7 +21,7 @@ public class History{
             Utils.writeJsonHistory("history.json", buildJsonHistory());
 
             JSONArray jsonArray = buildJsonHistory();
-            System.out.println(jsonArray.toString(2));
+//            System.out.println(jsonArray.toString(2));
         }catch (Exception e){
             throw new FileNotFoundException(e.getMessage());
         }
