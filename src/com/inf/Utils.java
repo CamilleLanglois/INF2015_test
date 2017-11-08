@@ -3,7 +3,10 @@ package com.inf;
 import manage.file.FileManager;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -22,6 +25,27 @@ public class Utils {
             throw new FileNotFoundException("Input json path could not be found.("+source+")");
         }
         return jsonObject;
+    }
+
+    public static JSONArray getJsonArrayFromFile(String source) throws FileNotFoundException {
+        JSONArray jsonArray;
+        try{
+            File historyFile = new File("output/history.json");
+            if(!historyFile.canRead()){
+                new FileOutputStream(historyFile, false);
+            }
+            String myJSON = FileManager.createStringFromFileContent(source, "");
+            if(!myJSON.isEmpty()){
+                jsonArray = JSONArray.fromObject(myJSON);
+            }else{
+                jsonArray = new JSONArray();
+            }
+
+
+        }catch(Exception e){
+            throw new FileNotFoundException("Input json path could not be found.("+source+")");
+        }
+        return jsonArray;
     }
 
     public static void createEmployeFromJson(JSONObject jsonObject)throws Exception{
@@ -77,6 +101,14 @@ public class Utils {
         json.accumulate("rente_federal", Employe.twoDigits(Employe.roundToFive(totalAnnuityFederal))+" $");
         json.accumulate("salaires", salaries);
         return json;
+    }
+
+    public static void writeJsonHistory(String filename, JSONArray jsonArray){
+        try {
+            FileManager.createFileFromStringContent("output", filename, jsonArray.toString());
+        }catch (Exception e){
+            println("The file could not be written.");
+        }
     }
 
     public static void println(Object o){

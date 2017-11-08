@@ -31,6 +31,7 @@ public class Employe {
     private Double hourlyRateMax;
     private String salaryRevisionDate;
 
+
    //we decided to put the validation in the constructor because we think it is more convenial
     public Employe(String fullname, Integer departmentType, Double hourlyRateMin, Double hourlyRateMax,
                    Integer nbDiploma, Integer seniority, Double workedHours, String salaryRevisionDate) throws Exception{
@@ -140,6 +141,14 @@ public class Employe {
     static public Double stringToDouble(String s){
         s = s.replaceAll(",", ".");
         return Double.parseDouble(s.replace(" $", ""));
+    }
+
+    //getter
+    public Integer getDepartmentType(){
+        return this.departmentType;
+    }
+    public Double getWorkedHours(){
+        return this.workedHours;
     }
     
 

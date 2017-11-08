@@ -2,6 +2,9 @@
  * Created by davidboutet on 17-09-18.
  */
 import java.io.FileNotFoundException;
+
+import com.inf.Employe;
+import com.inf.History;
 import com.inf.Utils;
 import net.sf.json.*;
 
@@ -12,6 +15,7 @@ public class SalaryAssessment {
             JSONObject jsonObject = Utils.getJsonFromFile(filePath);
             Utils.createEmployeFromJson(jsonObject);
             Utils.writeJson(outputFile);
+            new History(Employe.finalEmployeList);
         }catch (Exception e){
             Utils.writeErrorJson(outputFile, e.getMessage());
         }
