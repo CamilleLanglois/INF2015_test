@@ -14,7 +14,7 @@ public class SalaryAssessment {
         try{
             JSONObject jsonObject = Utils.getJsonFromFile(filePath);
             Utils.createEmployeFromJson(jsonObject);
-            Utils.writeJson(outputFile);
+            Utils.writeJson(outputFile, Utils.formatJson(Employe.finalEmployeList));
             new History(Employe.finalEmployeList);
         }catch (Exception e){
             Utils.writeErrorJson(outputFile, e.getMessage());

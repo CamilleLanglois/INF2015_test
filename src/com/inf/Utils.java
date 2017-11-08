@@ -60,8 +60,7 @@ public class Utils {
         }
     }
 
-    public static void writeJson(String filename){
-        JSONObject json = formatJson(Employe.finalEmployeList); // appeller addToJson avec listEmploye et listRecommendation
+    public static void writeJson(String filename, JSONObject json){
         try {
             FileManager.createFileFromStringContent("output", filename, json.toString());
         }catch (Exception e){
