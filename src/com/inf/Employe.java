@@ -56,13 +56,7 @@ public class Employe {
             default: return 0.0; //the validation is already done in constructor
         }
     }
-    
-    public String getFullName(){
-        return this.fullname;
-    }
-    public Double getWorkedHours(){
-        return this.workedHours;
-    }
+
     private double calculateNationalSalary() {
         return this.workedHours + this.hourlyRateMin;
     }
@@ -149,15 +143,19 @@ public class Employe {
     }
 
     //getter
-    public Integer getDepartmentType(){
-        return this.departmentType;
+    public String getFullName(){
+        return this.fullname;
     }
     public Double getWorkedHours(){
         return this.workedHours;
     }
-    
+    public Integer getDepartmentType(){
+        return this.departmentType;
+    }
 
-@Override
+
+
+    @Override
     public String toString() {
         return this.fullname;
     }
