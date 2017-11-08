@@ -10,7 +10,7 @@ import net.sf.json.*;
 
 public class SalaryAssessment {
     public static void main(String[] args){
-        String filePath = args[0], outputFile = args[1], historyAction = args[2];
+        String filePath = args[0], outputFile = args[1], historyAction = args.length>2?args[2]:null;
         try{
             JSONObject jsonObject = Utils.getJsonFromFile(filePath);
             Utils.createEmployeFromJson(jsonObject);

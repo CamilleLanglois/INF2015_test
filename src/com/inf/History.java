@@ -122,9 +122,11 @@ public class History{
         if(action.equals("-S")){
             showHistoryOnConsole();
             Utils.writeJsonHistory("history.json", buildJsonHistory());
-        }else{
+        }else if(action.equals("-SR")){
             Utils.writeJsonHistory("history.json", buildJsonHistory());
             resetHistory();
+        }else{
+            Utils.writeJsonHistory("history.json", buildJsonHistory());
         }
 
     }
