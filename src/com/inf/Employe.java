@@ -56,7 +56,12 @@ public class Employe {
         }
     }
     
-    
+    public String getFullName(){
+        return this.fullname;
+    }
+    public Double getWorkedHours(){
+        return this.workedHours;
+    }
     private double calculateNationalSalary() {
         return this.workedHours + this.hourlyRateMin;
     }
