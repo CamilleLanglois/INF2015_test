@@ -91,16 +91,15 @@ public class Validation {
     }
     
     // À VÉRIFIER 
-    public static void invalidFullName(JSONArray employes) throws IllegalArgumentException {
+    public static String invalidFullName(String name, ArrayList <Employe> list) throws IllegalArgumentException {
+        for(Employe e:list){
+              if ( e.getFullName().equals(name)){
+                   throw new IllegalArgumentException("Two employees should not have the same full name");
+              } 
+            }
+        return name;
+                   
         
-        for (int i = 0; i < employes.size(); i++) {
-            JSONArray t[] = (JSONArray[]) employes.get(i);
-            for (int j = 0; j < employes.size(); j++) {
-              if (t[0]==(employes.getJSONArray(j))) {
-                throw new IllegalArgumentException("Two employees should not have the same full name");
-              }
-            }       
-        }
     }
     
     public static void objContainsAllProperties(JSONObject objet) throws NoSuchFieldException {
