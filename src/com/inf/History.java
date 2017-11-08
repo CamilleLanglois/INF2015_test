@@ -42,7 +42,7 @@ public class History{
         jO.accumulate("employe_in_department_2", getNumberOfEmployeByDepartment(2));
         jO.accumulate("maximal_charge_of_work", getMaximalChargeOfWork());
         jO.accumulate("maximal_salary", getMaximalSalary());
-        jO.accumulate("maximal_salary", getMaximalSalary());
+        jO.accumulate("minimal_salary", getMinimalSalary());
 
         historicJson.add(jO);
 
