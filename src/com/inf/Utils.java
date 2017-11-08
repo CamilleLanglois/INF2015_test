@@ -61,7 +61,7 @@ public class Utils {
     }
 
     public static void writeJson(String filename){
-        JSONObject json = formatJson(Employe.finalEmployeList);
+        JSONObject json = formatJson(Employe.finalEmployeList); // appeller addToJson avec listEmploye et listRecommendation
         try {
             FileManager.createFileFromStringContent("output", filename, json.toString());
         }catch (Exception e){
@@ -84,7 +84,7 @@ public class Utils {
         Double totalValue = Employe.FIXED_AMOUNT;
         try{
             for(Employe e:listEmploye){
-                totalValue += e.calculateTotalSalary();
+                totalValue += e.calculateTotalSalary(); //faire une methode dans Employe
                 salaries.add(e.toJSONString());
             }
         }catch (Exception e){
@@ -92,7 +92,18 @@ public class Utils {
         }
         return addToJson(totalValue, Employe.calculateProvincialTax(totalValue), Employe.calculateFederalTax(totalValue), salaries);
     }
-
+    public static JSONArray formatJsonRecommandation(ArrayList<Recommandation> listRecommandation){
+        JSONArray recommendations = new JSONArray();
+        try {
+            for(Recommandation r:listRecommandation ){
+                recommendations.add(r);
+            }
+        } catch (Exception e){
+            println(e.getMessage());
+        }
+        return recommendations;
+    }
+    // faire le format de salaries et recommendations dans addToJson
     public static JSONObject addToJson(Double totalValue, Double totalAnnuityProvincial, Double totalAnnuityFederal, JSONArray salaries){
         JSONObject json = new JSONObject();
         json.accumulate("valeur_total", Employe.twoDigits(Employe.roundToFive(totalValue))+" $");
