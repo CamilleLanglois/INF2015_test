@@ -89,17 +89,14 @@ public class Validation {
         } 
 
     }
-    
-    // À VÉRIFIER 
+
     public static String invalidFullName(String name, ArrayList <Employe> list) throws IllegalArgumentException {
         for(Employe e:list){
-              if ( e.getFullName().equals(name)){
-                   throw new IllegalArgumentException("Two employees should not have the same full name");
-              } 
+            if (e.getFullName().equals(name)){
+                throw new IllegalArgumentException("Two employees should not have the same full name");
             }
+        }
         return name;
-                   
-        
     }
     
     public static void objContainsAllProperties(JSONObject objet) throws NoSuchFieldException {
@@ -121,11 +118,7 @@ public class Validation {
                 if (!arr.getJSONObject(i).containsKey(empProperties[j])) {
                     throw new NoSuchFieldException("Employe array missing property : " + empProperties[j]);
                 }
-                
             }
         }
     }
-    
-    
-    
 }
