@@ -89,31 +89,31 @@ public class Utils {
         }catch (Exception e){
             println(e.getMessage());
         }
-        //Validation.checkResultValues(listEmploye, totalValue);
-        //JSONArray recomm = formatJsonRecommandation(Recommandation.recommandationList);
-        return addToJson(totalValue, Employe.calculateProvincialTax(totalValue), Employe.calculateFederalTax(totalValue), salaries);
+        Validation.checkResultValues(listEmploye, totalValue);
+        JSONArray recomm = formatJsonRecommandation(Recommandation.recommandationList);
+        return addToJson(totalValue, Employe.calculateProvincialTax(totalValue), Employe.calculateFederalTax(totalValue), salaries, recomm);
     }
     public static JSONArray formatJsonRecommandation(ArrayList<Recommandation> listRecommandation){
-        JSONArray recommendations = new JSONArray();
+        JSONArray recommandations = new JSONArray();
         try {
             for(Recommandation r:listRecommandation ){
-                recommendations.add(r);
+                recommandations.add(r.toString());
             }
         } catch (Exception e){
             println(e.getMessage());
         }
-        return recommendations;
+        return recommandations;
     }
     
-    public static JSONObject addToJson(Double totalValue, Double totalAnnuityProvincial, Double totalAnnuityFederal, JSONArray salaries){
+    public static JSONObject addToJson(Double totalValue, Double totalAnnuityProvincial, Double totalAnnuityFederal, JSONArray salaries, JSONArray recomm){
         JSONObject json = new JSONObject();
         json.accumulate("valeur_total", Employe.twoDigits(Employe.roundToFive(totalValue))+" $");
         json.accumulate("rente_provinciale", Employe.twoDigits(Employe.roundToFive(totalAnnuityProvincial))+" $");
         json.accumulate("rente_federal", Employe.twoDigits(Employe.roundToFive(totalAnnuityFederal))+" $");
         json.accumulate("salaires", salaries);
-        /*if(!recomm.isEmpty()){
+        if(!recomm.isEmpty()){
             json.accumulate("recommandations",recomm);
-        }*/
+        }
         return json;
     }
     public static void writeJsonHistory(String filename, JSONArray jsonArray){
