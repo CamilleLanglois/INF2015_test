@@ -25,4 +25,8 @@ public class Recommandation {
        private void addRecommandationToList(){
         recommandationList.add(this);
     }
+    @Override
+    public String toString() {
+        return this.message;
+    }
 }
