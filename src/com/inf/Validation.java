@@ -113,7 +113,7 @@ public class Validation {
         int i = 1;
         while(i < employes.size() && !errDate){
             int monthsDifference = monthsDifference(employes.get(i-1).getSalaryRevisionDate(), employes.get(i).getSalaryRevisionDate());
-            if(monthsDifference > 6) {
+            if(Math.abs(monthsDifference) > 6) {
                 new Recommandation("L'écart maximal entre les dates de révision de salaire des employés d'un même département devrait être de moins de 6 mois");
                 errDate = true;
             }
