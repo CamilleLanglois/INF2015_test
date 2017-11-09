@@ -48,17 +48,13 @@ public class Employe {
     }
     
     public Double calculateTotalSalary(){
-        Double totalSalary = 0.0;
+        
         switch (this.departmentType) {
-            case 0: totalSalary = calculateNationalSalary() + calculateNationalSeniority() + calculateNationalDiploma();
-            break;
-            case 1: totalSalary = calculateRegionalSalary() + calculateRegionalSeniority()+ calculateRegionalDiploma();
-            break;
-            case 2: totalSalary = calculateInternationalSalary()+ calculateInternationalSeniority() + calculateInternationalDiploma();
-            break;
-            
+            case 0: return calculateNationalSalary() + calculateNationalSeniority() + calculateNationalDiploma();
+            case 1: return calculateRegionalSalary() + calculateRegionalSeniority()+ calculateRegionalDiploma();
+            case 2: return calculateInternationalSalary()+ calculateInternationalSeniority() + calculateInternationalDiploma();
+            default: return 0.0; //the validation is already done in constructor
         }
-        return Validation.invalidAmount(totalSalary);
     }
 
     private double calculateNationalSalary() {
