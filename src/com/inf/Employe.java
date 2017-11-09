@@ -51,8 +51,11 @@ public class Employe {
         Double totalSalary = 0.0;
         switch (this.departmentType) {
             case 0: totalSalary = calculateNationalSalary() + calculateNationalSeniority() + calculateNationalDiploma();
+            break;
             case 1: totalSalary = calculateRegionalSalary() + calculateRegionalSeniority()+ calculateRegionalDiploma();
+            break;
             case 2: totalSalary = calculateInternationalSalary()+ calculateInternationalSeniority() + calculateInternationalDiploma();
+            break;
             
         }
         return Validation.invalidAmount(totalSalary);
