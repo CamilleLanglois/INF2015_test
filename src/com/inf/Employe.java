@@ -58,7 +58,7 @@ public class Employe {
     }
 
     private double calculateNationalSalary() {
-        return this.workedHours + this.hourlyRateMin;
+        return this.workedHours * this.hourlyRateMin;
     }
     
     private double calculateNationalSeniority() {
