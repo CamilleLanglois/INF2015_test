@@ -62,12 +62,12 @@ public class Validation {
     }
     public static void checkResultValues(ArrayList<Employe> e, Double totalValue){
         
-        //checkEmployeValue(e);
-        //checkWorkedHours(e);
-        //checkHourlyRates(e);
-        //checkTotalValue(totalValue);
-        //checkAnnuities(totalValue);
-        //checkRevisionDates(e);
+        checkEmployeValue(e);
+        checkWorkedHours(e);
+        checkHourlyRates(e);
+        checkTotalValue(totalValue);
+        checkAnnuities(totalValue);
+        checkRevisionDates(e);
     }
     public static void checkTotalValue(Double totalValue){
         if (totalValue > 500000.00){
@@ -110,9 +110,9 @@ public class Validation {
     }
     public static void checkRevisionDates(ArrayList<Employe> employes){
         Boolean errDate = false;
-        int i = 0;
+        int i = 1;
         while(i < employes.size() && !errDate){
-            int monthsDifference = monthsDifference(employes.get(i).getSalaryRevisionDate(), employes.get(i+1).getSalaryRevisionDate());
+            int monthsDifference = monthsDifference(employes.get(i-1).getSalaryRevisionDate(), employes.get(i).getSalaryRevisionDate());
             if(monthsDifference > 6) {
                 new Recommandation("L'écart maximal entre les dates de révision de salaire des employés d'un même département devrait être de moins de 6 mois");
                 errDate = true;
