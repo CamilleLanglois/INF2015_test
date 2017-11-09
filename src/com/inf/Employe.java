@@ -152,8 +152,15 @@ public class Employe {
     public Integer getDepartmentType(){
         return this.departmentType;
     }
-
-
+    public Double getHourlyRateMin() {
+        return this.hourlyRateMin;
+    }
+    public Double getHourlyRateMax() {
+        return this.hourlyRateMax;
+    }
+    public String getSalaryRevisionDate(){
+        return this.salaryRevisionDate;
+    }
     @Override
     public String toString() {
         return this.fullname;
