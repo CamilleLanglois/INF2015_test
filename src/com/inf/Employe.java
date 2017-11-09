@@ -118,11 +118,7 @@ public class Employe {
 
     //static public method
     static public Double roundToFive(Double n) {
-        Double temp=0.00;
-        
-        temp = (Math.round(n*20.00))/20.00;
-
-        return temp;
+        return (Math.round(n*20.00))/20.00;
     }
 
     static public String twoDigits(Double n) {
