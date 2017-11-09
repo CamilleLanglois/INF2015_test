@@ -83,7 +83,7 @@ public class Utils {
         Double totalValue = Employe.FIXED_AMOUNT;
         try{
             for(Employe e:listEmploye){
-                totalValue += e.calculateTotalSalary();
+                totalValue += Validation.invalidAmount(e.calculateTotalSalary());
                 salaries.add(e.toJSONString());
             }
         }catch (Exception e){
