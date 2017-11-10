@@ -164,7 +164,7 @@ public class Employe {
     public String toJSONString() {
         JSONObject json = new JSONObject();
         json.accumulate("name", this.fullname);
-        json.accumulate("valeur_par_employe", twoDigits(this.calculateTotalSalary())+" $");
+        json.accumulate("value_per_employee", twoDigits(this.calculateTotalSalary())+" $");
         return json.toString();
     }
 }

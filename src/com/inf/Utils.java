@@ -108,11 +108,11 @@ public class Utils {
     public static JSONObject addToJson(Double totalValue, Double totalAnnuityProvincial, Double totalAnnuityFederal, JSONArray salaries, JSONArray recomm){
         JSONObject json = new JSONObject();
         json.accumulate("total_value", Employe.twoDigits(Employe.roundToFive(totalValue))+" $");
-        json.accumulate("rente_provinciale", Employe.twoDigits(Employe.roundToFive(totalAnnuityProvincial))+" $");
-        json.accumulate("rente_federal", Employe.twoDigits(Employe.roundToFive(totalAnnuityFederal))+" $");
-        json.accumulate("salaires", salaries);
+        json.accumulate("provincial_pension", Employe.twoDigits(Employe.roundToFive(totalAnnuityProvincial))+" $");
+        json.accumulate("federal_pension", Employe.twoDigits(Employe.roundToFive(totalAnnuityFederal))+" $");
+        json.accumulate("salary", salaries);
         if(!recomm.isEmpty()){
-            json.accumulate("recommandations",recomm);
+            json.accumulate("recommendations",recomm);
         }
         return json;
     }
