@@ -77,14 +77,14 @@ public class Validation {
     public static void checkEmployeValue(ArrayList<Employe> employes){
         for(Employe e: employes){
             if(e.calculateTotalSalary() > 150000.00){
-                new Recommandation("La valeur par employé de " + e.getFullName() + " est trop dispendieuse.");
+                new Recommandation("The value per employee of " + e.getFullName() + " Jade is too expensive.");
             } 
         }
     }
     public static void checkWorkedHours(ArrayList<Employe> employes){
         for(Employe e: employes){
             if(e.getWorkedHours() < 500){
-                new Recommandation("La charge de travail de " + e.getFullName()+ " est inférieure à 500 heures");
+                new Recommandation( e.getFullName()+ " 's worked hours is less than 500 hours.");
             }
         }
     }
@@ -93,7 +93,7 @@ public class Validation {
         Double maxRate = employes.get(0).getHourlyRateMax();
         
         if(maxRate > (2*minRate)) {
-            new Recommandation ("Le taux horaire maximal ne doit pas être supérieur à deux fois le taux horaire minimal");
+            new Recommandation ("The maximum hourly rate must not be greater than twice the minimum hourly rate.");
         }
     }
     public static void checkAnnuities(Double totalValue){
@@ -102,10 +102,10 @@ public class Validation {
         Double provAnnuity = Employe.calculateProvincialTax(totalValue);
         
         if(fedAnnuity > 150000){
-            new Recommandation ("La rente fédérale à payer nécessite deux versements");
+            new Recommandation ("Federal pension payable requires two payments.");
         }
         if(provAnnuity > 75000){
-            new Recommandation ("La rente provinciale à payer nécessite deux versements");
+            new Recommandation ("Provincial pension payable requires two payments.");
         }
     }
     public static void checkRevisionDates(ArrayList<Employe> employes){
@@ -114,7 +114,7 @@ public class Validation {
         while(i < employes.size() && !errDate){
             int monthsDifference = monthsDifference(employes.get(i-1).getSalaryRevisionDate(), employes.get(i).getSalaryRevisionDate());
             if(Math.abs(monthsDifference) > 6) {
-                new Recommandation("L'écart maximal entre les dates de révision de salaire des employés d'un même département devrait être de moins de 6 mois");
+                new Recommandation("The maximum difference between salary revision dates for employees in the same department should be less than 6 months.");
                 errDate = true;
             }
             i++;
