@@ -90,7 +90,7 @@ public class Validation {
 
     }
     
-    // À VÉRIFIER 
+     
     public static String invalidFullName(String name, ArrayList <Employe> list) throws IllegalArgumentException {
         for(Employe e:list){
               if ( e.getFullName().equals(name)){
