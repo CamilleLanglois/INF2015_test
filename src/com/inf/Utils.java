@@ -105,11 +105,12 @@ public class Utils {
         return recommandations;
     }
     
+    
     public static JSONObject addToJson(Double totalValue, Double totalAnnuityProvincial, Double totalAnnuityFederal, JSONArray salaries, JSONArray recomm){
         JSONObject json = new JSONObject();
         json.accumulate("total_value", Employe.twoDigits(Employe.roundToFive(totalValue))+" $");
-        json.accumulate("provincial_pension", Employe.twoDigits(Employe.roundToFive(totalAnnuityProvincial))+" $");
-        json.accumulate("federal_pension", Employe.twoDigits(Employe.roundToFive(totalAnnuityFederal))+" $");
+        json.accumulate("provincial_annuity", Employe.twoDigits(Employe.roundToFive(totalAnnuityProvincial))+" $");
+        json.accumulate("federal_annuity", Employe.twoDigits(Employe.roundToFive(totalAnnuityFederal))+" $");
         json.accumulate("salary", salaries);
         if(!recomm.isEmpty()){
             json.accumulate("recommendations",recomm);
