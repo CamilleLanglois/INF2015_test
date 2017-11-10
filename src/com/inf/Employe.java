@@ -58,7 +58,7 @@ public class Employe {
     }
 
     private double calculateNationalSalary() {
-        return this.workedHours + this.hourlyRateMin;
+        return this.workedHours * this.hourlyRateMin;
     }
     
     private double calculateNationalSeniority() {
@@ -118,11 +118,7 @@ public class Employe {
 
     //static public method
     static public Double roundToFive(Double n) {
-        Double temp=0.00;
-        
-        temp = (Math.round(n*20.00))/20.00;
-
-        return temp;
+        return (Math.round(n*20.00))/20.00;
     }
 
     static public String twoDigits(Double n) {
@@ -152,9 +148,15 @@ public class Employe {
     public Integer getDepartmentType(){
         return this.departmentType;
     }
-
-
-
+    public Double getHourlyRateMin() {
+        return this.hourlyRateMin;
+    }
+    public Double getHourlyRateMax() {
+        return this.hourlyRateMax;
+    }
+    public String getSalaryRevisionDate(){
+        return this.salaryRevisionDate;
+    }
     @Override
     public String toString() {
         return this.fullname;

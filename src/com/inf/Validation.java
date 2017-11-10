@@ -3,6 +3,8 @@ package com.inf;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.InputMismatchException;
 import net.sf.json.*;
 
@@ -58,19 +60,25 @@ public class Validation {
         }
         return date;
     }
-    
-    public static Double checkTotalValue(Double totalValue){
+    public static void checkResultValues(ArrayList<Employe> e, Double totalValue){
+        
+        checkEmployeValue(e);
+        checkWorkedHours(e);
+        checkHourlyRates(e);
+        checkTotalValue(totalValue);
+        checkAnnuities(totalValue);
+        checkRevisionDates(e);
+    }
+    public static void checkTotalValue(Double totalValue){
         if (totalValue > 500000.00){
             new Recommandation("Total departement value should be lower than 500 000.00$");
         }
-        return totalValue;
     }
     public static void checkEmployeValue(ArrayList<Employe> employes){
         for(Employe e: employes){
             if(e.calculateTotalSalary() > 150000.00){
                 new Recommandation("La valeur par employé de " + e.getFullName() + " est trop dispendieuse.");
-            }
-            
+            } 
         }
     }
     public static void checkWorkedHours(ArrayList<Employe> employes){
@@ -78,6 +86,38 @@ public class Validation {
             if(e.getWorkedHours() < 500){
                 new Recommandation("La charge de travail de " + e.getFullName()+ " est inférieure à 500 heures");
             }
+        }
+    }
+    public static void checkHourlyRates(ArrayList<Employe> employes){
+        Double minRate = employes.get(0).getHourlyRateMin();
+        Double maxRate = employes.get(0).getHourlyRateMax();
+        
+        if(maxRate > (2*minRate)) {
+            new Recommandation ("Le taux horaire maximal ne doit pas être supérieur à deux fois le taux horaire minimal");
+        }
+    }
+    public static void checkAnnuities(Double totalValue){
+        
+        Double fedAnnuity = Employe.calculateFederalTax(totalValue);
+        Double provAnnuity = Employe.calculateProvincialTax(totalValue);
+        
+        if(fedAnnuity > 150000){
+            new Recommandation ("La rente fédérale à payer nécessite deux versements");
+        }
+        if(provAnnuity > 75000){
+            new Recommandation ("La rente provinciale à payer nécessite deux versements");
+        }
+    }
+    public static void checkRevisionDates(ArrayList<Employe> employes){
+        Boolean errDate = false;
+        int i = 1;
+        while(i < employes.size() && !errDate){
+            int monthsDifference = monthsDifference(employes.get(i-1).getSalaryRevisionDate(), employes.get(i).getSalaryRevisionDate());
+            if(Math.abs(monthsDifference) > 6) {
+                new Recommandation("L'écart maximal entre les dates de révision de salaire des employés d'un même département devrait être de moins de 6 mois");
+                errDate = true;
+            }
+            i++;
         }
     }
     public static void employeListIsValid(JSONArray employes) throws IndexOutOfBoundsException {
@@ -89,17 +129,19 @@ public class Validation {
         } 
 
     }
+<<<<<<< HEAD
     
      
+=======
+
+>>>>>>> 2395b7d692dff441734f77c3b0661739416426a2
     public static String invalidFullName(String name, ArrayList <Employe> list) throws IllegalArgumentException {
         for(Employe e:list){
-              if ( e.getFullName().equals(name)){
-                   throw new IllegalArgumentException("Two employees should not have the same full name");
-              } 
+            if (e.getFullName().equals(name)){
+                throw new IllegalArgumentException("Two employees should not have the same full name");
             }
+        }
         return name;
-                   
-        
     }
     
     public static void objContainsAllProperties(JSONObject objet) throws NoSuchFieldException {
@@ -121,11 +163,35 @@ public class Validation {
                 if (!arr.getJSONObject(i).containsKey(empProperties[j])) {
                     throw new NoSuchFieldException("Employe array missing property : " + empProperties[j]);
                 }
-                
             }
         }
     }
-    
-    
-    
+    private static Date stringToDate(String date){
+       Date newDate = null;
+       try{
+            newDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+       
+       } catch (ParseException e) {
+            e.printStackTrace();
+       }
+       return newDate;
+    }
+    private static Integer monthsDifference(String startDate, String endDate){
+        
+        Date date1 = stringToDate(startDate);
+        Date date2 = stringToDate(endDate);
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTime(date1);
+        cal2.setTime(date2);
+            
+        return monthsDifference(cal1, cal2);
+          
+    }
+    private static Integer monthsDifference(Calendar startDate, Calendar endDate){
+        
+        int m1 = startDate.get(Calendar.YEAR) * 12 + startDate.get(Calendar.MONTH);
+        int m2 = endDate.get(Calendar.YEAR) * 12 + endDate.get(Calendar.MONTH);
+        return m2 - m1;
+    }
 }

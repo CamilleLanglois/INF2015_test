@@ -15,20 +15,16 @@ import java.util.Date;
 public class History{
     private ArrayList<Employe> employeeList;
 
-    public History(ArrayList<Employe> employeeList) throws FileNotFoundException{
+    public History(ArrayList<Employe> employeeList, String historyAction) throws FileNotFoundException{
         try{
             this.employeeList = employeeList;
-            Utils.writeJsonHistory("history.json", buildJsonHistory());
-
-            JSONArray jsonArray = buildJsonHistory();
-//            System.out.println(jsonArray.toString(2));
+            actionDispatcher(historyAction);
         }catch (Exception e){
             throw new FileNotFoundException(e.getMessage());
         }
     }
 
     private JSONArray buildJsonHistory() throws FileNotFoundException{
-
         JSONArray historicJson = Utils.getJsonArrayFromFile("output/history.json");
 
         JSONObject jO = new JSONObject();
@@ -39,6 +35,8 @@ public class History{
         jO.accumulate("less_than_50k", getNumberOfEmployeBySalaryRange(0));
         jO.accumulate("between_50k_and_100k", getNumberOfEmployeBySalaryRange(1));
         jO.accumulate("more_than_100k", getNumberOfEmployeBySalaryRange(2));
+        jO.accumulate("employe_in_department_0", getNumberOfEmployeByDepartment(0));
+        jO.accumulate("employe_in_department_1", getNumberOfEmployeByDepartment(1));
         jO.accumulate("employe_in_department_2", getNumberOfEmployeByDepartment(2));
         jO.accumulate("maximal_charge_of_work", getMaximalChargeOfWork());
         jO.accumulate("maximal_salary", getMaximalSalary());
@@ -118,5 +116,32 @@ public class History{
             }
         }
         return Employe.twoDigits(Employe.roundToFive(minSalary)) + " $";
+    }
+
+    private void actionDispatcher(String action)throws Exception{
+        if(action.equals("-S")){
+            showHistoryOnConsole();
+            Utils.writeJsonHistory("history.json", buildJsonHistory());
+        }else if(action.equals("-SR")){
+            Utils.writeJsonHistory("history.json", buildJsonHistory());
+            resetHistory();
+        }else{
+            Utils.writeJsonHistory("history.json", buildJsonHistory());
+        }
+
+    }
+
+    private void showHistoryOnConsole() throws FileNotFoundException{
+        JSONArray jsonArray = buildJsonHistory();
+        System.out.println(jsonArray.toString(2));
+    }
+
+    private void resetHistory() throws FileNotFoundException{
+        try{
+            Utils.writeJsonHistory("history.json", new JSONArray());
+            System.out.println("History has been reset.");
+        }catch (Exception e){
+            throw new FileNotFoundException("History file not found.");
+        }
     }
 }

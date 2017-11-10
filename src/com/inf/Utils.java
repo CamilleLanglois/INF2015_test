@@ -60,8 +60,7 @@ public class Utils {
         }
     }
 
-    public static void writeJson(String filename){
-        JSONObject json = formatJson(Employe.finalEmployeList); // appeller addToJson avec listEmploye et listRecommendation
+    public static void writeJson(String filename, JSONObject json){
         try {
             FileManager.createFileFromStringContent("output", filename, json.toString());
         }catch (Exception e){
@@ -84,35 +83,39 @@ public class Utils {
         Double totalValue = Employe.FIXED_AMOUNT;
         try{
             for(Employe e:listEmploye){
-                totalValue += e.calculateTotalSalary(); //faire une methode dans Employe
+                totalValue += e.calculateTotalSalary();
                 salaries.add(e.toJSONString());
             }
         }catch (Exception e){
             println(e.getMessage());
         }
-        return addToJson(totalValue, Employe.calculateProvincialTax(totalValue), Employe.calculateFederalTax(totalValue), salaries);
+        Validation.checkResultValues(listEmploye, totalValue);
+        JSONArray recomm = formatJsonRecommandation(Recommandation.recommandationList);
+        return addToJson(totalValue, Employe.calculateProvincialTax(totalValue), Employe.calculateFederalTax(totalValue), salaries, recomm);
     }
     public static JSONArray formatJsonRecommandation(ArrayList<Recommandation> listRecommandation){
-        JSONArray recommendations = new JSONArray();
+        JSONArray recommandations = new JSONArray();
         try {
             for(Recommandation r:listRecommandation ){
-                recommendations.add(r);
+                recommandations.add(r.toString());
             }
         } catch (Exception e){
             println(e.getMessage());
         }
-        return recommendations;
+        return recommandations;
     }
-    // faire le format de salaries et recommendations dans addToJson
-    public static JSONObject addToJson(Double totalValue, Double totalAnnuityProvincial, Double totalAnnuityFederal, JSONArray salaries){
+    
+    public static JSONObject addToJson(Double totalValue, Double totalAnnuityProvincial, Double totalAnnuityFederal, JSONArray salaries, JSONArray recomm){
         JSONObject json = new JSONObject();
         json.accumulate("valeur_total", Employe.twoDigits(Employe.roundToFive(totalValue))+" $");
         json.accumulate("rente_provinciale", Employe.twoDigits(Employe.roundToFive(totalAnnuityProvincial))+" $");
         json.accumulate("rente_federal", Employe.twoDigits(Employe.roundToFive(totalAnnuityFederal))+" $");
         json.accumulate("salaires", salaries);
+        if(!recomm.isEmpty()){
+            json.accumulate("recommandations",recomm);
+        }
         return json;
     }
-
     public static void writeJsonHistory(String filename, JSONArray jsonArray){
         try {
             FileManager.createFileFromStringContent("output", filename, jsonArray.toString());
