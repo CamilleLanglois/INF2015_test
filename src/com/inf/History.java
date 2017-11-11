@@ -18,7 +18,7 @@ public class History{
     public History(ArrayList<Employe> employeeList, String historyAction) throws FileNotFoundException{
         try{
             this.employeeList = employeeList;
-            actionDispatcher(historyAction);
+//            actionDispatcher(historyAction);
         }catch (Exception e){
             throw new FileNotFoundException(e.getMessage());
         }
@@ -118,23 +118,31 @@ public class History{
         return Employe.twoDigits(Employe.roundToFive(minSalary)) + " $";
     }
 
-    private void actionDispatcher(String action)throws Exception{
-        if(action.equals("-S")){
-            showHistoryOnConsole();
-            Utils.writeJsonHistory("history.json", buildJsonHistory());
-        }else if(action.equals("-SR")){
-            Utils.writeJsonHistory("history.json", buildJsonHistory());
+    public void actionDispatcher(String action) throws Exception{
+//        if(action.equals("-S")){
+//            showHistoryOnConsole();
+//            Utils.writeJsonHistory("history.json", buildJsonHistory());
+//        }else if(action.equals("-SR")){
+//            Utils.writeJsonHistory("history.json", buildJsonHistory());
+//            resetHistory();
+//        }else{
+//            Utils.writeJsonHistory("history.json", buildJsonHistory());
+//        } 
+        if(action.equals("-SR")){
             resetHistory();
-        }else{
-            Utils.writeJsonHistory("history.json", buildJsonHistory());
+        } else {
+            JSONArray hist = buildJsonHistory();
+            if (action.equals("-S")){
+                System.out.println(hist.toString(2));
+            }
+            Utils.writeJsonHistory("history.json", hist);
         }
-
     }
 
-    private void showHistoryOnConsole() throws FileNotFoundException{
-        JSONArray jsonArray = buildJsonHistory();
-        System.out.println(jsonArray.toString(2));
-    }
+//    private void showHistoryOnConsole() throws FileNotFoundException{
+//        JSONArray jsonArray = buildJsonHistory();
+//        System.out.println(jsonArray.toString(2));
+//    }
 
     private void resetHistory() throws FileNotFoundException{
         try{
