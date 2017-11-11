@@ -16,7 +16,6 @@ public class SalaryAssessment {
             Utils.createEmployeFromJson(jsonObject);
             Utils.writeJson(outputFile, Utils.formatJson(Employe.finalEmployeList));
             new History(Employe.finalEmployeList, historyAction);
-//            History.executeAction(historyAction);
         }catch (Exception e){
             Utils.writeErrorJson(outputFile, e.getMessage());
         }
