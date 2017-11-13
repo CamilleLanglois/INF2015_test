@@ -131,7 +131,7 @@ public class Validation {
     }
 
     public static String invalidFullName(String name, ArrayList <Employe> list) throws IllegalArgumentException {
-        if(name.equals("")){
+        if(name.isEmpty()){
             throw new IllegalArgumentException("Employe name cannot be an empty string");
         }
         for(Employe e:list){
