@@ -131,6 +131,9 @@ public class Validation {
     }
 
     public static String invalidFullName(String name, ArrayList <Employe> list) throws IllegalArgumentException {
+        if(name.equals("")){
+            throw new IllegalArgumentException("Employe name cannot be an empty string");
+        }
         for(Employe e:list){
             if (e.getFullName().equals(name)){
                 throw new IllegalArgumentException("Two employees should not have the same full name");
