@@ -17,34 +17,22 @@ public class Utils {
     public static JSONObject getJsonFromFile(String source) throws FileNotFoundException {
         JSONObject jsonObject;
         try{
+            File file = new File(source);
+            if(!file.canRead()){
+                new FileOutputStream(file, false);
+            }
+
             String myJSON = FileManager.createStringFromFileContent(source, "");
-            jsonObject = JSONObject.fromObject(myJSON);
+            if(!myJSON.isEmpty()){
+                jsonObject = JSONObject.fromObject(myJSON);
+            }else{
+                jsonObject = new JSONObject();
+            }
             
         }catch(Exception e){
             throw new FileNotFoundException("Input json path could not be found.("+source+")");
         }
         return jsonObject;
-    }
-
-    public static JSONArray getJsonArrayFromFile(String source) throws FileNotFoundException {
-        JSONArray jsonArray;
-        try{
-            File historyFile = new File("output/history.json");
-            if(!historyFile.canRead()){
-                new FileOutputStream(historyFile, false);
-            }
-            String myJSON = FileManager.createStringFromFileContent(source, "");
-            if(!myJSON.isEmpty()){
-                jsonArray = JSONArray.fromObject(myJSON);
-            }else{
-                jsonArray = new JSONArray();
-            }
-
-
-        }catch(Exception e){
-            throw new FileNotFoundException("Input json path could not be found.("+source+")");
-        }
-        return jsonArray;
     }
 
     public static void createEmployeFromJson(JSONObject jsonObject)throws Exception{
@@ -117,9 +105,9 @@ public class Utils {
         }
         return json;
     }
-    public static void writeJsonHistory(String filename, JSONArray jsonArray){
+    public static void writeJsonHistory(String filename, JSONObject jsonObject){
         try {
-            FileManager.createFileFromStringContent("output", filename, jsonArray.toString());
+            FileManager.createFileFromStringContent("output", filename, jsonObject.toString());
         }catch (Exception e){
             println("The file could not be written.");
         }
