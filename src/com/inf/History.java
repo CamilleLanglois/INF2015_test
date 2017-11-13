@@ -50,8 +50,8 @@ public class History{
         jsonObject.accumulate("employe_in_department_1", getNumberOfEmployeByDepartment(1) + historicJson.getInt("employe_in_department_1"));
         jsonObject.accumulate("employe_in_department_2", getNumberOfEmployeByDepartment(2) + historicJson.getInt("employe_in_department_2"));
         jsonObject.accumulate("maximal_charge_of_work", Math.max(getMaximalChargeOfWork(), historicJson.getDouble("maximal_charge_of_work")));
-        jsonObject.accumulate("maximal_salary", Employe.twoDigits(Math.max(getMaximalSalary(), Employe.stringToDouble(historicJson.getString("maximal_salary")))) + "$");
-        jsonObject.accumulate("minimal_salary", Employe.twoDigits(Math.min(getMinimalSalary(), Employe.stringToDouble(historicJson.getString("minimal_salary")))) + "$");
+        jsonObject.accumulate("maximal_salary", Employe.twoDigits(Math.max(getMaximalSalary(), Employe.stringToDouble(historicJson.getString("maximal_salary")))) + " $");
+        jsonObject.accumulate("minimal_salary", Employe.twoDigits(Math.min(getMinimalSalary(), Employe.stringToDouble(historicJson.getString("minimal_salary")))) + " $");
         return jsonObject;
     }
 
@@ -65,8 +65,8 @@ public class History{
         jsonObject.accumulate("employe_in_department_1", getNumberOfEmployeByDepartment(1));
         jsonObject.accumulate("employe_in_department_2", getNumberOfEmployeByDepartment(2));
         jsonObject.accumulate("maximal_charge_of_work", getMaximalChargeOfWork());
-        jsonObject.accumulate("maximal_salary", Employe.twoDigits(getMaximalSalary()) + "$");
-        jsonObject.accumulate("minimal_salary", Employe.twoDigits(getMinimalSalary()) + "$");
+        jsonObject.accumulate("maximal_salary", Employe.twoDigits(getMaximalSalary()) + " $");
+        jsonObject.accumulate("minimal_salary", Employe.twoDigits(getMinimalSalary()) + " $");
         return jsonObject;
     }
 
