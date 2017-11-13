@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class Utils {
 
-    public static JSONObject getJsonFromFile(String source) throws FileNotFoundException {
+    public static JSONObject getJsonFromFile(String source, Boolean exception) throws FileNotFoundException {
         JSONObject jsonObject;
         try{
             File file = new File(source);
@@ -25,8 +25,10 @@ public class Utils {
             String myJSON = FileManager.createStringFromFileContent(source, "");
             if(!myJSON.isEmpty()){
                 jsonObject = JSONObject.fromObject(myJSON);
-            }else{
+            }else if(!exception){
                 jsonObject = new JSONObject();
+            } else {
+               throw new FileNotFoundException("Input json path could not be found.("+source+")"); 
             }
             
         }catch(Exception e){
