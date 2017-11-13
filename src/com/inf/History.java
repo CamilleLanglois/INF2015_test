@@ -24,7 +24,7 @@ public class History{
     }
 
     private JSONObject buildJsonHistory() throws FileNotFoundException{
-        JSONObject historicJson = Utils.getJsonFromFile("output/history.json");
+        JSONObject historicJson = Utils.getJsonFromFile("output/history.json", false);
 
         JSONObject jO = new JSONObject();
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
