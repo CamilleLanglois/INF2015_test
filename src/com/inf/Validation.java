@@ -71,13 +71,13 @@ public class Validation {
     }
     public static void checkTotalValue(Double totalValue){
         if (totalValue > 500000.00){
-            new Recommandation("Total departement value should be lower than 500 000.00$");
+             new Recommandation("Total departement value should be lower than 500 000.00$");
         }
     }
     public static void checkEmployeValue(ArrayList<Employe> employes){
         for(Employe e: employes){
             if(e.calculateTotalSalary() > 150000.00){
-                new Recommandation("The value per employee of " + e.getFullName() + " Jade is too expensive.");
+                new Recommandation("The value per employee of " + e.getFullName() + "is too expensive.");
             } 
         }
     }

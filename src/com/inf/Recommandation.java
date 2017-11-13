@@ -5,7 +5,6 @@
  */
 package com.inf;
 
-import static com.inf.Employe.finalEmployeList;
 import java.util.ArrayList;
 
 /**
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 public class Recommandation {
     public static ArrayList<Recommandation> recommandationList = new ArrayList<Recommandation>();
     
-    private String message;
+    private final String message;
     
     public Recommandation(String message){
         this.message = message;

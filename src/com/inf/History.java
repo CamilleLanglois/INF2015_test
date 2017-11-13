@@ -1,6 +1,5 @@
 package com.inf;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import java.io.FileNotFoundException;
@@ -79,20 +78,21 @@ public class History{
         Integer minimum = 50000,
                 maximum = 100000;
         for(Employe employe:this.employeeList){
+            switch(action){
             //less than 50000
-            if(action == 0){
+            case 0:
                 if(employe.calculateTotalSalary() <= minimum){
                     numberOfEmploye++;
                 }
-            }
+            break;
             //between 50000 and 100000
-            else if(action == 1){
+            case 1:
                 if(employe.calculateTotalSalary()>=minimum&&employe.calculateTotalSalary()<=maximum){
                     numberOfEmploye++;
                 }
-            }
+            break;
             //more than 100000
-            else{
+            default:
                 if(employe.calculateTotalSalary() >= maximum){
                     numberOfEmploye++;
                 }

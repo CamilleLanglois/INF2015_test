@@ -3,9 +3,6 @@ import net.sf.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import com.inf.Validation;
-
-
 
 /**
  * Created by davidboutet on 17-09-18.
@@ -22,14 +19,14 @@ public class Employe {
     private final Integer NB_DIPLOMA_BASE = 2;
     private final Double BASE_AMOUT_SENIORITY = 5000.0;
 
-    private String fullname;
-    private Integer departmentType;
-    private Integer nbDiploma;
-    private Integer seniority;
-    private Double workedHours;
-    private Double hourlyRateMin;
-    private Double hourlyRateMax;
-    private String salaryRevisionDate;
+    private final String fullname;
+    private final Integer departmentType;
+    private final Integer nbDiploma;
+    private final Integer seniority;
+    private final Double workedHours;
+    private final Double hourlyRateMin;
+    private final Double hourlyRateMax;
+    private final String salaryRevisionDate;
 
 
    //we decided to put the validation in the constructor because we think it is more convenial
